@@ -19,6 +19,18 @@ public class Map extends MapGenerator{
 		
 	}
 	
+	public void setField(){
+		int i = 0; 
+		int j = 0;
+		//Generate Parameter
+		
+		for(i = 0; i < 100; i++){
+			for(j = 0; j < 100; j++)
+				if(i >= 5 )
+				field[i][j] = "Tree";
+		}
+	}
+	
 	public String[][] getField(){
 		return field;
 	}
