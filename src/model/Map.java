@@ -2,38 +2,26 @@ package model;
 
 import java.util.Random;
 
-public class Map extends MapGenerator{
-	private String[][] field;
+public class Map {
+	private int[][] field;
 	private int countAgents;
 	private int countBuildings;
 	private int countResources;
+	private int biomeType;
 	private boolean occupied;
+	private MapGenerator map;
 	
-			
-	public Map() {
-		field = new String[100][100];
-		countAgents = 1;//Start off with 1 agent?
+	public Map(){
+		map = new MapGenerator();
+		countAgents = 1;
 		countBuildings = 0;
-		countResources = 0;//Is this per Agent or for the whole map?
+		countResources = 8000;
 		occupied = false;
-		
+		biomeType = map.getBiome();
+		field = map.getField();
 	}
 	
-	public void setField(){
-		int i = 0; 
-		int j = 0;
-		//Generate Parameter
-		
-		for(i = 0; i < 100; i++){
-			for(j = 0; j < 100; j++)
-				if(i >= 5 )
-				field[i][j] = "Tree";
-		}
-	}
 	
-	public String[][] getField(){
-		return field;
-	}
 	
 	public int getBuildings(){
 		return countBuildings;
@@ -48,6 +36,8 @@ public class Map extends MapGenerator{
 	public boolean isOccupied(){
 		return occupied;
 	}
+	
+
 	
 	
 	
