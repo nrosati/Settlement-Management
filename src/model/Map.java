@@ -15,7 +15,7 @@ public class Map {
 		map = new MapGenerator();
 		countAgents = 1;
 		countBuildings = 0;
-		countResources = 8000;
+		countResources = 31000;
 		occupied = false;
 		biomeType = map.getBiome();
 		field = map.getField();

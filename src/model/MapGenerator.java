@@ -40,7 +40,7 @@ public class MapGenerator {
 	 * Generates the resources and puts them on the map field.
 	 * @param numResource Is a count of how many of this resource you want
 	 * @param kindResource Is a number representing what resource you want to place
-	 * 0 is wood.  1 is water. 2 is food. 3 is gold.
+	 * 1 is wood.  2 is water. 3 is food. 4 is gold.
 	 */
 	public void generateResources(int numResource, int kindResource){
 		
