@@ -11,7 +11,7 @@ public class Pathfinder {
 		Map map = Map.getMap();
 		field = map.getField();
 		placeAgent();
-		searchFood();
+		searchResource(3);
 		collectable = false;
 		move = false;
 	}
@@ -41,26 +41,28 @@ public class Pathfinder {
 		return updatedField;
 	}
 
-	public void searchFood() { // 3 is food
+	public void searchResource(int resource) { // 3 is food
 		// int[][] collectableLocation;
+		double min = Double.POSITIVE_INFINITY;
 		int i = 0;
 		int j = 0;
+		int x = 0;
+		int y = 0;
 		int iterations = 3;
-		for (i = 0; i < iterations; i++) {
-			for (j = 0; j < iterations; j++) {
-				if (field[i][j] == 3) {
-					updatedField[i][j] = 8;
-					// i = iterations;
-					collectable = true;
-					break;
+		for (i = 0; i < 100; i++) {
+			for (j = 0; j < 100; j++) {
+				if (field[i][j] == resource) {
+					double distance = distanceFormula(1,1, i, j);
+					if(distance < min){
+						min = distance;
+						x = i;//These may need to be switched around
+						y = j;//These may need to be switched around
+					}
 				}
-				if(field[iterations][iterations] != 3)
-					iterations++;
+				
 			}
 		}
-			// if(i == (iterations-1) && collectable == false) {
-			// iterations += 1;
-			// }
+			field[x][y] = 8;
 	}
 
 	public int[][] searchGold() { // 4 is gold
