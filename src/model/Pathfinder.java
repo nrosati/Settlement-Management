@@ -65,14 +65,6 @@ public class Pathfinder {
 			field[x][y] = 8;
 	}
 
-	public int[][] searchGold() { // 4 is gold
-		return null;
-	}
-
-	public int[][] searchWood() { // 1 is tree
-		return null;
-	}
-
 	public static void main(String[] args) {
 		// MapGenerator path = new MapGenerator();
 		Pathfinder path = new Pathfinder();
