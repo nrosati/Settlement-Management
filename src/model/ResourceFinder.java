@@ -1,13 +1,13 @@
 package model;
 
-public class Pathfinder {
+public class ResourceFinder {
 	private int[][] field;
 	private int[][] updatedField;
 	private MapGenerator map;
 	private boolean collectable;
 	private boolean move;
 
-	public Pathfinder() {
+	public ResourceFinder() {
 		Map map = Map.getMap();
 		field = map.getField();
 		placeAgent();
@@ -67,7 +67,7 @@ public class Pathfinder {
 
 	public static void main(String[] args) {
 		// MapGenerator path = new MapGenerator();
-		Pathfinder path = new Pathfinder();
+		ResourceFinder path = new ResourceFinder();
 		int testField[][] = path.getField();
 
 		for (int i = 0; i < 100; i++) {
