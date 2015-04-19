@@ -9,18 +9,23 @@ public class Map {
 	private int countResources;
 	private int biomeType;
 	private boolean occupied;
-	private MapGenerator map;
+	private MapGenerator mapGen;
+	private static Map map = new Map();
 	
-	public Map(){
-		map = new MapGenerator("easy");
-		countAgents = 1;
-		countBuildings = 0;
-		countResources = resourceCounter();
-		occupied = false;
-		biomeType = map.getBiome();
-		field = map.getField();
+	public static Map getMap(){
+		return map;
 	}
-
+	private Map(){
+		mapGen = new MapGenerator("easy");
+		//countAgents = 1;
+		//countBuildings = 0;
+		//countResources = resourceCounter();
+		//occupied = false;
+		//biomeType = mapGen.getBiome();
+		field = mapGen.getField();
+	}
+	
+	
 
 
 	public int resourceCounter() {
