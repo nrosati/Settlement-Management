@@ -12,16 +12,31 @@ public class Map {
 	private MapGenerator map;
 	
 	public Map(){
-		map = new MapGenerator();
+		map = new MapGenerator("easy");
 		countAgents = 1;
 		countBuildings = 0;
-		countResources = 31000;
+		countResources = resourceCounter();
 		occupied = false;
 		biomeType = map.getBiome();
 		field = map.getField();
 	}
+
+
+
+	public int resourceCounter() {
+		int resources = 0;
+		for(int i = 0; i < 100; i++){
+			for(int j = 0; j < 100; j++){
+				if(field[i][j] != 0) countResources++;
+			}
+		}
+		
+		return resources;
+	}
 	
-	
+	public int[][] getField(){
+		return field;
+	}
 	
 	public int getBuildings(){
 		return countBuildings;

@@ -6,10 +6,10 @@ public class MapGenerator {
 	private int[][] field;
 	
 	
-	public MapGenerator() {
+	public MapGenerator(String difficulty) {
 		 int biomeRandom = randomGen();
 		 field = new int[100][100];
-		 generateMap();
+		 generateMap(difficulty);
 	}
 	
 	public int getBiome(){
@@ -28,12 +28,27 @@ public class MapGenerator {
 		else if(biomeNumber == 3) return biome = "Grassland";
 		else return biome = "Something went wrong";		
 	}
-	public int[][] generateMap(){
-		generateResources(10000, 1);//Generate 2000 tree tiles
-		generateResources(8000, 2);//Generate 3000 water tiles
-		generateResources(8000, 3);//Generate 2000 food tiles
-		generateResources(5000, 4);//Generate 1000 gold tiles
+	public int[][] generateMap(String difficulty){
+		if(difficulty.equals("easy")){
+			generateResources(10000, 1);//Generate 2000 tree tiles
+			generateResources(8000, 2);//Generate 3000 water tiles
+			generateResources(8000, 3);//Generate 2000 food tiles
+			generateResources(5000, 4);//Generate 1000 gold tiles
+		}
 		
+		if(difficulty.equals("medium")){
+			generateResources(7000, 1);//Generate 2000 tree tiles
+			generateResources(5000, 2);//Generate 3000 water tiles
+			generateResources(5000, 3);//Generate 2000 food tiles
+			generateResources(3000, 4);//Generate 1000 gold tiles
+		}
+		
+		if(difficulty.equals("hard")){
+			generateResources(5000, 1);//Generate 2000 tree tiles
+			generateResources(10000, 2);//Generate 3000 water tiles
+			generateResources(3000, 3);//Generate 2000 food tiles
+			generateResources(2000, 4);//Generate 1000 gold tiles
+		}
 		return field;
 	}
 	/**
@@ -80,7 +95,7 @@ public class MapGenerator {
 	}
 	
 	public static void main(String[] args){
-		MapGenerator map = new MapGenerator();
+		MapGenerator map = new MapGenerator("hard");
 		String biome = map.getBiomeString();
 		int biomeNum = map.getBiome();
 		int field[][] = map.getField();
