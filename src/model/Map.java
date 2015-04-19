@@ -42,6 +42,17 @@ public class Map {
 		return countBuildings;
 	}
 	
+	public void addBuilding(){
+		countBuildings++;
+	}
+	
+	public void addAgent(){
+		countAgents++;
+	}
+	
+	public void removeAgent(){
+		countAgents--;
+	}
 	public int getAgents(){
 		return countAgents;
 	}
