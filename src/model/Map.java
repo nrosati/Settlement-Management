@@ -11,18 +11,19 @@ public class Map {
 	private boolean occupied;
 	private MapGenerator mapGen;
 	private static Map map = new Map();
+	private final String difficulty = ("easy");
 	
 	public static Map getMap(){
 		return map;
 	}
 	private Map(){
-		mapGen = new MapGenerator("easy");
-		//countAgents = 1;
-		//countBuildings = 0;
-		//countResources = resourceCounter();
-		//occupied = false;
-		//biomeType = mapGen.getBiome();
+		mapGen = new MapGenerator(difficulty);
 		field = mapGen.getField();
+		biomeType = mapGen.getBiome();	
+		countAgents = 1;
+		countBuildings = 0;
+		countResources = resourceCounter();
+		occupied = false;			
 	}
 	
 	

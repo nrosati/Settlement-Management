@@ -1,4 +1,4 @@
-
+package model;
 public class World {
 	private static int totalFood;
 	private static int totalWater;

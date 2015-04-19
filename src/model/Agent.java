@@ -6,7 +6,7 @@
  * name, health, strength, and other simple/common agent variables.
  * 
  */
-
+package model;
 import java.awt.Image;
 import java.util.Timer;
 
