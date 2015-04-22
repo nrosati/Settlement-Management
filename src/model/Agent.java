@@ -28,6 +28,8 @@ public abstract class Agent {
 	private boolean busy;
 	private boolean hungry;
 	private boolean selected;
+	
+	private boolean isPhilosopher;
 
 	protected boolean isGatherer;
 	protected boolean isWarrior;
@@ -123,6 +125,25 @@ public abstract class Agent {
 		}
 		return this.storage;
 	}
+	
+	public void slowlyDie() throws InterruptedException {
+		for(int i = this.health; i > 0; i--) {
+			Thread.sleep(10000);
+			this.health--;
+			System.out.println("health: " + this.health);
+			if(this.health <= 5) {
+				System.out.println("Your health is getting low. Eat something!");
+				this.hungry = true;
+				//Walk Towards Either Building that stores food to eat or to nearest food resource
+			}
+			
+			if(this.health == 0) {
+				System.out.println("Due to a lack of energy, " + this.name + "has sat down and dedicated his life to philosophy");
+				this.hungry = false;
+				this.isPhilosopher = true;
+			}
+		}
+	}
 
 	
 	public boolean depositResources(int resourceType, Building building) {
@@ -150,7 +171,6 @@ public abstract class Agent {
 			}
 		}
 		return built;
-		
 	}
 	
 	/*public void depositResource() {
