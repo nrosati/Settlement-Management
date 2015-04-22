@@ -125,14 +125,14 @@ public abstract class Agent {
 	}
 
 	
-	public int depositResources() {
+	public boolean depositResources(int resourceType, Building building) {
+		boolean deposited = false;
 		if(this.resource != null && this.storage > 0) {
-			int count = this.storage;
-			this.resource = null;
-			this.storage = 0;
-			return count;
+			building.depositResources(resourceType, storage);
+			deposited = true;
+			storage = 0;
 		}
-		else return 0;
+		return deposited;
 	}
 	
 	public boolean buildBuilding(int resources, int x, int y){
