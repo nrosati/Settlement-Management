@@ -2,17 +2,20 @@ package model;
 import java.awt.Image;
 import java.util.Arrays;
 
-public abstract class Building {
+public class Building {
 	private Image buildingImage;
 	private boolean dense;
-	private Arrays [][] size;
+	private Tile [][] size;
+	private int storage;
+	private String buildingType;
 	
 	private int cost;
 	
-	public Building(int cost, Arrays[][] size, boolean dense) {
+	public Building(String building) {
 		this.cost = cost;
 		this.size = size;           //formatted incorrectly for now jsut to get something started
-		this.dense = dense; 
+		this.dense = dense;
+		buildingType = building;
 	}
 	
 	
@@ -20,14 +23,16 @@ public abstract class Building {
 		return this.cost;
 	}
 	
-	public Arrays[][] size() {
+	public Tile [][] getSize() {
 		return this.size;
 	}
 	
 	public boolean isDense() {
 		return this.dense;
 	}
-	
+	public void depositResources(int resource, int numResources){
+		storage += numResources;
+	}
 	
 	
 

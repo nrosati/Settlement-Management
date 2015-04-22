@@ -17,7 +17,8 @@ public abstract class Agent {
 	protected int storage;
 	protected int health;
 	protected int faith;
-
+	private Map map;
+	private Tile[][] field;
 	protected int capacity;
 
 	private int locationX;
@@ -39,12 +40,12 @@ public abstract class Agent {
 
 	public Agent(String name, int locationX, int locationY/* , Image image */) {
 		this.name = name;
-
+		map = Map.getMap();
 		health = 20;
 		strength = 0;
 		faith = 0;
 		storage = 0;
-
+		field = map.getField();
 		this.locationX = locationX;
 		this.locationY = locationY;
 
@@ -132,6 +133,24 @@ public abstract class Agent {
 			return count;
 		}
 		else return 0;
+	}
+	
+	public boolean buildBuilding(int resources, int x, int y){
+		boolean built = false;
+		Building storeHouse = new Building("storeHouse");
+		if(storeHouse.getCost() > resources) return built;
+		else if(storeHouse.getCost() <= resources){
+			if(field[x][y].getPassable() && field[x++][y].getPassable() 
+					&& field[x][y++].getPassable() && field[x++][y++].getPassable()){
+				field[x][y].makeImpassable();
+				field[x++][y].makeImpassable();
+				field[x][y++].makeImpassable();
+				field[x++][y++].makeImpassable();
+				built = true;
+			}
+		}
+		return built;
+		
 	}
 	
 	/*public void depositResource() {
