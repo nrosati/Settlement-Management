@@ -3,20 +3,20 @@ import java.util.Random;
 
 public class MapGenerator {
 	private int biomeType;
-	private int[][] field;
+	private Tile[][] field;
 	
 	
 	public MapGenerator(String difficulty) {
 		 int biomeRandom = randomGen();
-		 field = new int[100][100];
-		 generateMap(difficulty);
+		 field = new Tile[100][100];
+		 generateMap(difficulty, biomeType);
 	}
 	
 	public int getBiome(){
 		return biomeType;
 		
 	}
-	public int[][] getField(){
+	public Tile[][] getField(){
 		return field;
 	}
 	public String getBiomeString(){
@@ -28,7 +28,15 @@ public class MapGenerator {
 		else if(biomeNumber == 3) return biome = "Grassland";
 		else return biome = "Something went wrong";		
 	}
-	public int[][] generateMap(String difficulty){
+	public Tile[][] generateMap(String difficulty, int biomeType){
+		//Initializing tiles only done once
+		for(int k = 0; k < 100; k++){
+			for(int l = 0; l < 100; l++){
+				field[k][l] = new Tile();//Call new to place a new tile at location
+				field[k][l].setChords(k,l);//Set coordinates of tile 
+			}
+		}
+		
 		if(difficulty.equals("easy")){
 			generateResources(10000, 1);//Generate 2000 tree tiles
 			generateResources(8000, 2);//Generate 3000 water tiles
@@ -59,6 +67,7 @@ public class MapGenerator {
 	 */
 	public void generateResources(int numResource, int kindResource){
 		
+		
 		int count = numResource;
 		int what = kindResource;
 	
@@ -70,23 +79,23 @@ public class MapGenerator {
 			//Move North, place a resource
 			if(random == 0 && i < 99){//Out of bounds check
 				i++;//Move North
-				if(field[i][j] == 0) field[i][j] = what;//If empty place
+				if(field[i][j].getResourceType() == 0) field[i][j].setResourceType(what, biomeType); //If empty place
 				count--;
 			}
 			else if(random == 1 && i >0){//So we don't go into a negative part of the array
 				i--;
-				if(field[i][j] == 0) field[i][j] = what;//If Empty place
+				if(field[i][j].getResourceType() == 0) field[i][j].setResourceType(what, biomeType);//If Empty place
 				count--;
 			}
 			else if(random == 2 && j < 99){//Out of bounds check
 				j++;//Move east
-				if(field[i][j] == 0) field[i][j] = what;//If Empty place
+				if(field[i][j].getResourceType() == 0) field[i][j].setResourceType(what, biomeType);//If Empty place
 				count--;
 			}
 			
 			else if(random == 3 && j > 0){//So we don't subtract from zero and go out of bounds
 				j--;//Move West
-				if(field[i][j] == 0) field[i][j] = what;//If empty place
+				if(field[i][j].getResourceType() == 0) field[i][j].setResourceType(what, biomeType);//If empty place
 				count--;
 			}
 				
@@ -98,11 +107,12 @@ public class MapGenerator {
 		MapGenerator map = new MapGenerator("hard");
 		String biome = map.getBiomeString();
 		int biomeNum = map.getBiome();
-		int field[][] = map.getField();
+		Tile[][] field = map.getField();
 		
 		for(int i = 0; i < 100; i++){
 			for(int j = 0; j < 100; j++){
-				System.out.print(field[i][j] + " ");
+				int tile = field[i][j].getResourceType();
+				System.out.print(tile + " ");
 			}
 			System.out.println();
 		}

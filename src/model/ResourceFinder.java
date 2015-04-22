@@ -1,8 +1,8 @@
 package model;
 
 public class ResourceFinder {
-	private int[][] field;
-	private int[][] updatedField;
+	private Tile[][] field;
+	private Tile[][] updatedField;
 	private MapGenerator map;
 	private boolean collectable;
 	private boolean move;
@@ -31,13 +31,16 @@ public class ResourceFinder {
        
         return distance;
     }
-
+	//This needs to be redone just?
+	//Just give the coordinates to the Agent
+	//call the boolean in tile for agent
 	public void placeAgent() {
 		updatedField = this.field;
-		updatedField[1][1] = 7;
+		updatedField[1][1].setResourceType(7, 0);
+		//updatedField[1][1].setAgent();
 	}
 
-	public int[][] getField() {
+	public Tile[][] getField() {
 		return updatedField;
 	}
 
@@ -51,7 +54,7 @@ public class ResourceFinder {
 		int iterations = 3;
 		for (i = 0; i < 100; i++) {
 			for (j = 0; j < 100; j++) {
-				if (field[i][j] == resource) {
+				if (field[i][j].getResourceType() == resource) {
 					double distance = distanceFormula(1,1, i, j);
 					if(distance < min){
 						min = distance;
@@ -62,13 +65,13 @@ public class ResourceFinder {
 				
 			}
 		}
-			field[x][y] = 8;
+			field[x][y].setResourceType(8, 0);
 	}
 
 	public static void main(String[] args) {
 		// MapGenerator path = new MapGenerator();
 		ResourceFinder path = new ResourceFinder();
-		int testField[][] = path.getField();
+		Tile testField[][] = path.getField();
 
 		for (int i = 0; i < 100; i++) {
 			for (int j = 0; j < 100; j++) {

@@ -3,7 +3,7 @@ package model;
 import java.util.Random;
 
 public class Map {
-	private int[][] field;
+	private Tile[][] field;
 	private int countAgents;
 	private int countBuildings;
 	private int countResources;
@@ -33,14 +33,14 @@ public class Map {
 		int resources = 0;
 		for(int i = 0; i < 100; i++){
 			for(int j = 0; j < 100; j++){
-				if(field[i][j] != 0) countResources++;
+				if(field[i][j].getResourceType() != 0) countResources++;
 			}
 		}
 		
 		return resources;
 	}
 	
-	public int[][] getField(){
+	public Tile[][] getField(){
 		return field;
 	}
 	
