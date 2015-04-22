@@ -12,10 +12,11 @@ public class Building {
 	private int cost;
 	
 	public Building(String building) {
-		this.cost = cost;
+		cost = 10;
 		this.size = size;           //formatted incorrectly for now jsut to get something started
 		this.dense = dense;
 		buildingType = building;
+		storage = 100;
 	}
 	
 	

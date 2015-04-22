@@ -38,6 +38,10 @@ public class Tile {
 		return resourceType;
 	}
 	
+	public void setResourceType(int r){
+		resourceType = r;
+	}
+	
 	public void setResourceType(int resourceType, int biomeNum){
 		this.resourceType = resourceType;
 		String biome = "";

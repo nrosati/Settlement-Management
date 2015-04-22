@@ -10,7 +10,7 @@ package model;
 import java.awt.Image;
 import java.util.Timer;
 
-public abstract class Agent {
+public class Agent {//Removed abstract for testing purposes
 	private String name;
 	// private List<Resources> resources;
 	protected int strength;
@@ -44,7 +44,7 @@ public abstract class Agent {
 		health = 20;
 		strength = 0;
 		faith = 0;
-		storage = 0;
+		storage = 100;
 		field = map.getField();
 		this.locationX = locationX;
 		this.locationY = locationY;
@@ -111,6 +111,10 @@ public abstract class Agent {
 	public Resources getResource() {
 		return this.resource;
 	}
+	
+	public void setAgent(int i, int j){
+		field[i][j].setResourceType(7);
+	}
 
 	public int gatherResources(Resources resource) throws InterruptedException {
 		this.resource = resource;
@@ -140,12 +144,16 @@ public abstract class Agent {
 		Building storeHouse = new Building("storeHouse");
 		if(storeHouse.getCost() > resources) return built;
 		else if(storeHouse.getCost() <= resources){
-			if(field[x][y].getPassable() && field[x++][y].getPassable() 
-					&& field[x][y++].getPassable() && field[x++][y++].getPassable()){
+			if(field[x][y].getPassable() && field[x+1][y].getPassable() 
+					&& field[x][y+1].getPassable() && field[x+1][y+1].getPassable()){
 				field[x][y].makeImpassable();
-				field[x++][y].makeImpassable();
-				field[x][y++].makeImpassable();
-				field[x++][y++].makeImpassable();
+				field[x][y].setResourceType(5);
+				field[x+1][y].makeImpassable();
+				field[x+1][y].setResourceType(5);
+				field[x][y+1].makeImpassable();
+				field[x][y+1].setResourceType(5);
+				field[x+1][y+1].makeImpassable();
+				field[x+1][y+1].setResourceType(5);
 				built = true;
 			}
 		}
