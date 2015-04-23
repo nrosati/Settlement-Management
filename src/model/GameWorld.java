@@ -25,16 +25,28 @@ public class GameWorld {
 				field[i][j].setResourceType(0);
 			}
 		}
-		
+		int storage = agent.getStorage();
+		System.out.println("Agents resources = " + storage);
 		agent.setAgent(0,0);
-		boolean built = agent.buildBuilding(agent.getStorage(), 1, 1);
+		//boolean built = agent.buildBuilding(agent.getStorage(), 1, 1);
+		Building building = agent.buildBuilding(agent.getStorage(), 1, 1);
 		for(int i = 0; i < 100; i++){
 			for(int j = 0; j < 100; j++){
 				System.out.print(field[i][j].getResourceType() + " ");
 			}
 			System.out.println();
 		}
-		System.out.println("Did the building get built? " + built);
+		//System.out.println("Did the building get built? " + built);
+		storage = agent.getStorage();
+		System.out.println("Agents resources after building = " + storage);
+		
+		
+		
+		System.out.println("Depositing resources");
+		
+		agent.depositResources(1,building);
+		storage = agent.getStorage();
+		System.out.println("Agents resources after deposit = " + storage);
 	}
 
 }

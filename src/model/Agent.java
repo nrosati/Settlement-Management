@@ -152,18 +152,21 @@ public class Agent {//Removed abstract for testing purposes
 	
 	public boolean depositResources(int resourceType, Building building) {
 		boolean deposited = false;
-		if(this.resource != null && this.storage > 0) {
+		/*if(this.resource != null && this.storage > 0) {
 			building.depositResources(resourceType, storage);
 			deposited = true;
-			storage = 0;
-		}
+			this.storage = 0;
+		}*/
+		storage = 0;
+		deposited = true;
+		
 		return deposited;
 	}
 	
-	public boolean buildBuilding(int resources, int x, int y){
+	public Building buildBuilding(int resources, int x, int y){
 		boolean built = false;
 		Building storeHouse = new Building("storeHouse");
-		if(storeHouse.getCost() > resources) return built;
+		if(storeHouse.getCost() > resources) built = false;
 		else if(storeHouse.getCost() <= resources){
 			if(field[x][y].getPassable() && field[x+1][y].getPassable() 
 					&& field[x][y+1].getPassable() && field[x+1][y+1].getPassable()){
@@ -175,10 +178,11 @@ public class Agent {//Removed abstract for testing purposes
 				field[x][y+1].setResourceType(5);
 				field[x+1][y+1].makeImpassable();
 				field[x+1][y+1].setResourceType(5);
+				this.storage = this.storage - storeHouse.getCost();
 				built = true;
 			}
 		}
-		return built;
+		return storeHouse;
 	}
 	
 	/*public void depositResource() {
