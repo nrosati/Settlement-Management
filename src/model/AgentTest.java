@@ -13,6 +13,7 @@ public class AgentTest {
 		assertEquals("gatherer", agent1.getName());
 	}
 	
+	/*
 	@Test
 	public void gatherResourcesTest() throws InterruptedException {
 		Agent agent1 = new AgentWarrior("gatherer", 0, 0);
@@ -21,23 +22,35 @@ public class AgentTest {
 		assertEquals((Integer)20, agent1.getStorage());
 		assertEquals(food, agent1.getResource());
 		assertEquals(food, agent1.getResource());
+		
+	//	assertEquals(agent1.health, agent1.getHealth());
 		//System.out.println("food count: " + agent1.gatherResources(food));  
 		
 	}
-	
+	*/
 	@Test
-	public void depositResourcesTest() throws InterruptedException{
-		Agent agent1 = new AgentWarrior("gatherer", 0, 0);
-		Resources food = new ResourcesFood("food", 0,0, true);
+	public void lePhilosopherTest
 
+	
+	() throws InterruptedException{
+		//Agent agent1 = new AgentWarrior("gatherer", 0, 0);
+		//Resources food = new ResourcesFood("food", 0,0, true);
+		
+		Agent philosopher = new AgentWarrior("Socrates", 0, 0);
+		philosopher.equals(philosopher.health);
+		philosopher.health += 0;
+		
+		philosopher.slowlyDie();
+		
+/*
 		agent1.gatherResources(food);
 		assertEquals((Integer)20, agent1.getStorage());
 		assertEquals(food, agent1.getResource());
 		
-		agent1.depositResources();
+		//agent1.depositResources();
 		assertEquals((Integer)0, agent1.getStorage());
 		assertEquals(null, agent1.getResource());
-	
+	*/
 		/*
 		
 		assertEquals(20, World.getTotalFood(0));

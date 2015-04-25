@@ -48,6 +48,7 @@ public class Agent {//Removed abstract for testing purposes
 		faith = 0;
 		storage = 100;
 		field = map.getField();
+		capacity = 20;				//EVERETT WE ADDED THIS!!!
 		this.locationX = locationX;
 		this.locationY = locationY;
 
@@ -131,8 +132,10 @@ public class Agent {//Removed abstract for testing purposes
 	}
 	
 	public void slowlyDie() throws InterruptedException {
+		
+		
 		for(int i = this.health; i > 0; i--) {
-			Thread.sleep(10000);
+			Thread.sleep(1000);
 			this.health--;
 			System.out.println("health: " + this.health);
 			if(this.health <= 5) {
@@ -141,8 +144,10 @@ public class Agent {//Removed abstract for testing purposes
 				//Walk Towards Either Building that stores food to eat or to nearest food resource
 			}
 			
+			
+			
 			if(this.health == 0) {
-				System.out.println("Due to a lack of energy, " + this.name + "has sat down and dedicated his life to philosophy");
+				System.out.println("Due to a lack of energy, " + this.name + " has sat down and dedicated his life to philosophy");
 				this.hungry = false;
 				this.isPhilosopher = true;
 			}
@@ -150,7 +155,7 @@ public class Agent {//Removed abstract for testing purposes
 	}
 
 	
-	public boolean depositResources(int resourceType, Building building) {
+	public boolean depositResources(int resourceType) { //Building building as a parameter??
 		boolean deposited = false;
 		/*if(this.resource != null && this.storage > 0) {
 			building.depositResources(resourceType, storage);
