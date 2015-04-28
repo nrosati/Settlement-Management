@@ -46,7 +46,7 @@ public class Agent {//Removed abstract for testing purposes
 		health = 20;
 		strength = 0;
 		faith = 0;
-		storage = 20;
+		storage = 100;
 		field = map.getField();
 		capacity = 20;				//EVERETT WE ADDED THIS!!!
 		this.locationX = locationX;
@@ -123,7 +123,7 @@ public class Agent {//Removed abstract for testing purposes
 		this.resource = resource;
 		for (int i = 0; i < capacity; i++) {
 			//Thread.sleep(1000); // I want to incorporate the Timer library
-								
+								// later because it uses
 			this.storage++;
 			System.out.println(this.storage); // less resources. For now
 												// this should be good.
@@ -135,29 +135,13 @@ public class Agent {//Removed abstract for testing purposes
 		
 		
 		for(int i = this.health; i > 0; i--) {
-			Thread.sleep(100);
+			Thread.sleep(1000);
 			this.health--;
 			System.out.println("health: " + this.health);
 			if(this.health <= 5) {
 				System.out.println("Your health is getting low. Eat something!");
 				this.hungry = true;
-				if(this.storage > 0) {
-					System.out.println("Agent stops work to eat.");
-					System.out.println("Eating...");
-					this.health += this.storage;
-					if(this.health >= 20) {
-						int remainder = (this.health-this.storage);
-						this.health = 20;
-						this.storage = remainder;
-						i=(this.health+1);
-					}
-					else {
-						this.storage = 0;
-						i=(this.health+1);
-					}
-					
-				}
-				
+				//Walk Towards Either Building that stores food to eat or to nearest food resource
 			}
 			
 			
@@ -166,21 +150,23 @@ public class Agent {//Removed abstract for testing purposes
 				System.out.println("Due to a lack of energy, " + this.name + " has sat down and dedicated his life to philosophy");
 				this.hungry = false;
 				this.isPhilosopher = true;
-				
 			}
 		}
 	}
 
 	
-	public boolean depositResources(int resourceType, Building building) { 
+	public boolean depositResources(int resourceType) { //Building building as a parameter??
 		boolean deposited = false;
-		building.depositResources(resourceType);
+		/*if(this.resource != null && this.storage > 0) {
+			building.depositResources(resourceType, storage);
+			deposited = true;
+			this.storage = 0;
+		}*/
 		storage = 0;
 		deposited = true;
 		
 		return deposited;
 	}
-	
 	
 	public Building buildBuilding(int resources, int x, int y){
 		boolean built = false;
@@ -203,5 +189,72 @@ public class Agent {//Removed abstract for testing purposes
 		}
 		return storeHouse;
 	}
+	
+	/*public void depositResource() {
+
+		if (this.resource != null) {
+			int test = this.storage;
+			World.getTotalFood(test);
+			this.resource = null;
+			this.storage = 0;
+		}
+	}*/
+
+	/*
+	 * The commented out code in the bottom was me trying to incorporate a
+	 * distance formula. But then I realized that it would be better to just
+	 * wait for the map formula.
+	 */
+
+	// int resourceLocX = resource.getLocationX();
+	// int resourceLocY = resource.getLocationY();
+
+	// Timer time = new Timer();
+
+	// return count;
+	/*
+	 * 
+	 * if(this.locationX <= resourceLocX && this.locationY <= resourceLocY) {
+	 * for(int i = this.locationX; i < resourceLocX; i++) { for(int j =
+	 * this.locationY; j < resourceLocY; j++) {
+	 * 
+	 * 
+	 * }
+	 * 
+	 * } }
+	 * 
+	 * else if(this.locationX <= resourceLocX && this.locationY >= resourceLocY)
+	 * { for(int i = this.locationX; i < resourceLocX; i++) { for(int j =
+	 * this.locationY; j > resourceLocY; j--) {
+	 * 
+	 * } }
+	 * 
+	 * }
+	 * 
+	 * else if(this.locationX >= resourceLocX && this.locationY <= resourceLocY)
+	 * { for(int i = this.locationX; i > resourceLocX; i--) { for(int j =
+	 * this.locationY; j < resourceLocY; j++) {
+	 * 
+	 * 
+	 * } } }
+	 * 
+	 * else if(this.locationX >= resourceLocX && this.locationY >= resourceLocY)
+	 * { for(int i = this.locationX; i > resourceLocX; i--) { for(int j =
+	 * this.locationY; j > resourceLocY; i--) {
+	 * 
+	 * } }
+	 * 
+	 * }
+	 */
+
+	// return count;
+
+	// }
+
+	/*
+	 * public buildWhat(Building building) {
+	 * 
+	 * }
+	 */
 
 }
