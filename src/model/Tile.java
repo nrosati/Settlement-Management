@@ -1,12 +1,6 @@
 package model;
 
-import java.awt.*;
-import java.io.*;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-public class Tile extends JPanel{
+public class Tile {
 	private int x;
 	private int y;
 	private int resourceType;
@@ -56,8 +50,7 @@ public class Tile extends JPanel{
 		if(biomeNum == 2) biome = "desert";
 		if(biomeNum == 3) biome = "tundra";
 		
-		if(resourceType == 0) picName = biome + "Dirt";
-		else if(resourceType == 1) picName = biome +"Tree";
+		if(resourceType == 1) picName = biome +"Tree";
 		else if(resourceType == 2) picName = biome +"Water";
 		else if(resourceType == 3) picName = biome + "Food";
 		else if(resourceType == 4) picName = biome + "Gold";
@@ -89,21 +82,6 @@ public class Tile extends JPanel{
 	
 	public boolean getPassable(){
 		return passable;		
-	}
-	public void drawTile(Graphics g, int height, int width){
-		super.paintComponent(g);
-		try{
-			InputStream is = new BufferedInputStream(new FileInputStream(picName + ".png"));
-			Image image = ImageIO.read(is);
-			int x = this.getXChord();
-			int y = this.getYChord();
-			g.drawImage(image, x, y, height, width, null);//Null is something called ImageObserver?
-		} catch (IOException e){e.printStackTrace();}
-		
-		
-			
-		
-		
 	}
 	
 	
