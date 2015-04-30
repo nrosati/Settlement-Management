@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.*;
+
 import java.io.*;
 
 import javax.imageio.ImageIO;
@@ -91,9 +92,10 @@ public class Tile extends JPanel{
 		return passable;		
 	}
 	public void drawTile(Graphics g, int height, int width){
+		File file = new File("src/model/tileTest.png");
 		super.paintComponent(g);
 		try{
-			InputStream is = new BufferedInputStream(new FileInputStream(picName + ".png"));
+			InputStream is = new BufferedInputStream(new FileInputStream("src/model/tileTest.png"));
 			Image image = ImageIO.read(is);
 			int x = this.getXChord();
 			int y = this.getYChord();

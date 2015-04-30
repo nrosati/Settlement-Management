@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+
 import javax.annotation.Resource;
 
 public class GameWorld {
@@ -65,8 +67,15 @@ public class GameWorld {
 		System.out.println("Next, tests what happens if an agent does not eat for too long.");
 		//tests what happens if an agent does not eat, they will become philosophers, which in this game world is no better than death
 		//also shows 1 fully implemented need, hunger
-		Agent dyingAgent = new AgentWarrior("Socrates", 1, 1);		
-		dyingAgent.slowlyDie();
+		//Agent dyingAgent = new AgentWarrior("Socrates", 1, 1);		
+		//dyingAgent.slowlyDie();
+		
+		
+			
+		
 				
+	
+	
+	
 	}
 }
