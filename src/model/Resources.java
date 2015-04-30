@@ -1,7 +1,7 @@
 package model;
 import java.awt.Image;
 
-public abstract class Resources {
+public class Resources {
 	
 	private String name;
 	private Image resourceImage;

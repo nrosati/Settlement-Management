@@ -90,6 +90,16 @@ public class Agent {//Removed abstract for testing purposes
 	public String getLocation() {
 		return (locationX + ", " + locationY);
 	}
+	
+	
+	public int getXLoc() {
+		// TODO Auto-generated method stub
+		return this.locationX;
+	}
+	
+	public int getYLoc() {
+		return this.locationY;
+	}
 
 	/*
 	 * public Image getImage() { return this.image; }
@@ -189,6 +199,8 @@ public class Agent {//Removed abstract for testing purposes
 		}
 		return storeHouse;
 	}
+
+
 	
 	/*public void depositResource() {
 
