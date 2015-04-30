@@ -32,7 +32,11 @@ public class DrawTest {
 	        private JFrame frame = new JFrame(); //creates frame	        
 	        private JLabel test;
 	        private JLabel test2;
-	        private ImageIcon icon = new ImageIcon("src/model/tileTest.png");
+	        private ImageIcon dirtTile = new ImageIcon("src/view/dirtTile.png");
+	        private ImageIcon waterTile = new ImageIcon("src/view/waterTile.png");
+	        private ImageIcon treeTile = new ImageIcon("src/view/treeTile.png");
+	        private ImageIcon foodTile = new ImageIcon("src/view/foodTile.png");
+	        private ImageIcon goldTile = new ImageIcon("src/view/goldTile.png");
 	        private Tile water;
 	        
 	        
@@ -50,12 +54,17 @@ public class DrawTest {
        			   			String mapTile = "";
 	                        for(int i = 0; i < 100; i++){
 	                			for(int j = 0; j < 100; j++){
-	                				String tile = field[i][j].getName();
+	                				int tile = field[i][j].getResourceType();
+	                				//System.out.println(tile);
 	                				
-	                				
-	                				if(tile.contains("grassLand"))test.setIcon(icon);
+	                				//if(tile == 0)test.setIcon(dirtTile);
+	                				if(tile == 1)test.setIcon(dirtTile);
+	                				else if(tile == 2)test.setIcon(waterTile);
+	                				else if(tile == 3)test.setIcon(foodTile);
+	                				else if(tile == 4)test.setIcon(goldTile);
+	                				//else test.setIcon(dirtTile);
 	                			
-	                				test = new JLabel(tile);	    
+	                				test = new JLabel(field[i][j].getName());	    
 	                				
 	                				                				
 	          
@@ -64,16 +73,17 @@ public class DrawTest {
 	          
 	                				//frame.add(test2);	                			            			
 	          
-		        	                frame.pack(); //sets appropriate size for frame
-		        	                frame.setVisible(true); //makes frame visible
+	                				//frame.pack(); //sets appropriate size for frame
+		        	                //frame.setVisible(true); //makes frame visible
 		                		
 	                			}
 	                	
-	                		frame.add(test);
+	                		//frame.add(test);
 	                		         		
 	                }
 	                        
-	                        
+	                        frame.pack(); //sets appropriate size for frame
+        	                frame.setVisible(true); //makes frame visible
 	                       
 	                
 	        }
