@@ -20,7 +20,9 @@ public class Tile extends JPanel{
 		resourceType = 0;
 		picName = "dirt";
 	}
-	
+	public String getName(){
+		return picName;
+	}
 	public void setChords(int x, int y){
 		this.x = x;
 		this.y = y;
@@ -92,7 +94,7 @@ public class Tile extends JPanel{
 		return passable;		
 	}
 	public void drawTile(Graphics g, int height, int width){
-		File file = new File("src/model/tileTest.png");
+		//File file = new File("src/model/tileTest.png");
 		super.paintComponent(g);
 		try{
 			InputStream is = new BufferedInputStream(new FileInputStream("src/model/tileTest.png"));

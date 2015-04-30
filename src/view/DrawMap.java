@@ -22,8 +22,8 @@ public class DrawMap extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.clearRect(0, 0, getWidth(), getHeight());
-		int w = 100;
-		int h = 100;
+		int w = getWidth() / NUM_COLS;
+		int h = getHeight() / NUM_ROWS;
 		for(int i = 0; i < NUM_ROWS; i++){
 			for(int j = 0; j < NUM_COLS; j++){
 				field[i][j].drawTile(g,w,h);//maybe g?
