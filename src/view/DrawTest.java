@@ -1,11 +1,17 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.image.ImageProducer;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,7 +32,7 @@ public class DrawTest {
 	        private JFrame frame = new JFrame(); //creates frame	        
 	        private JLabel test;
 	        private JLabel test2;
-	        private ImageIcon icon = new ImageIcon("images/water.png");
+	        private ImageIcon icon = new ImageIcon("src/model/tileTest.png");
 	        private Tile water;
 	        
 	        
@@ -44,11 +50,12 @@ public class DrawTest {
        			   			String mapTile = "";
 	                        for(int i = 0; i < 100; i++){
 	                			for(int j = 0; j < 100; j++){
-	                				int tile = field[i][j].getResourceType();
-	                				mapTile += tile;
+	                				String tile = field[i][j].getName();
 	                				
+	                				
+	                				if(tile.contains("grassLand"))test.setIcon(icon);
 	                			
-	                				test = new JLabel(mapTile + "");	    
+	                				test = new JLabel(tile);	    
 	                				
 	                				                				
 	          

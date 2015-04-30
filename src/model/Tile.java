@@ -59,7 +59,7 @@ public class Tile extends JPanel{
 		if(biomeNum == 2) biome = "desert";
 		if(biomeNum == 3) biome = "tundra";
 		
-		if(resourceType == 0) picName = biome + "Dirt";
+		else if(resourceType == 0) picName = biome + "Dirt";
 		else if(resourceType == 1) picName = biome +"Tree";
 		else if(resourceType == 2) picName = biome +"Water";
 		else if(resourceType == 3) picName = biome + "Food";
