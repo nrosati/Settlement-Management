@@ -57,15 +57,15 @@ public class DrawTest {
 	                				
 	                				int tile = field[i][j].getResourceType();
 	                				//System.out.println(tile);
-	                				
+	                				test = new JLabel(field[i][j].getName());
 	                				//if(tile == 0)test.setIcon(dirtTile);
 	                				if(tile == 1)test.setIcon(dirtTile);
 	                				else if(tile == 2)test.setIcon(waterTile);
 	                				else if(tile == 3)test.setIcon(foodTile);
 	                				else if(tile == 4)test.setIcon(goldTile);
-	                				//else test.setIcon(dirtTile);
+	                				else test.setIcon(dirtTile);
 	                			
-	                				test = new JLabel(field[i][j].getName());	    
+	                					    
 	                				
 	                				                				
 	          
