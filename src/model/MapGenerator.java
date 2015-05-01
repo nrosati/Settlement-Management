@@ -10,7 +10,6 @@ public class MapGenerator {
 		 int biomeType = randomGen();
 		 field = new Tile[100][100];
 		 generateMap(difficulty, biomeType);
-		 
 	}
 	
 	public int getBiome(){
@@ -35,8 +34,6 @@ public class MapGenerator {
 			for(int l = 0; l < 100; l++){
 				field[k][l] = new Tile();//Call new to place a new tile at location
 				field[k][l].setChords(k,l);//Set coordinates of tile 
-				
-				
 			}
 		}
 		

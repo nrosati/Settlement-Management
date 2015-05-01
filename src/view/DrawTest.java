@@ -54,6 +54,7 @@ public class DrawTest {
        			   			String mapTile = "";
 	                        for(int i = 0; i < 100; i++){
 	                			for(int j = 0; j < 100; j++){
+	                				
 	                				int tile = field[i][j].getResourceType();
 	                				//System.out.println(tile);
 	                				
@@ -73,7 +74,7 @@ public class DrawTest {
 	          
 	                				//frame.add(test2);	                			            			
 	          
-	                				//frame.pack(); //sets appropriate size for frame
+		        	                //frame.pack(); //sets appropriate size for frame
 		        	                //frame.setVisible(true); //makes frame visible
 		                		
 	                			}
@@ -82,10 +83,11 @@ public class DrawTest {
 	                		         		
 	                }
 	                        
-	                        frame.pack(); //sets appropriate size for frame
-        	                frame.setVisible(true); //makes frame visible
+	                     frame.pack();
+	                     frame.setVisible(true);
 	                       
-	                
+	          
+	                   
 	        }
 	        public static void main(String[] args) {
 	                new DrawTest();// propagates new map

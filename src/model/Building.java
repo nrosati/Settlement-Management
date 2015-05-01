@@ -16,7 +16,7 @@ public class Building {
 		this.size = size;           //formatted incorrectly for now jsut to get something started
 		this.dense = dense;
 		buildingType = building;
-		storage = 100;
+		storage = 0;
 	}
 	
 	
@@ -31,10 +31,13 @@ public class Building {
 	public boolean isDense() {
 		return this.dense;
 	}
-	public void depositResources(int resource, int numResources){
+	public void depositResources(/*int resource,*/ int numResources){
 		storage += numResources;
 	}
 	
+	public int getStorage() {
+		return this.storage;
+	}
 	
 
 }
