@@ -8,7 +8,7 @@ import javax.swing.*;
 public class DrawMap extends JPanel{
 	private static  Map map = Map.getMap(); 
 	private static Tile[][] field = map.getField();
-	BufferedImage im = new BufferedImage(3000,3000,BufferedImage.TYPE_INT_RGB);
+	BufferedImage im = new BufferedImage(1000,1000,BufferedImage.TYPE_INT_RGB);
 	
 	public DrawMap() {
 		init();

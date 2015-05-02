@@ -14,13 +14,17 @@ public class Tile extends JPanel{
 	private boolean passable;
 	private boolean agent;
 	private String picName;
-	private BufferedImage img;
+	private static BufferedImage img;
 	public Tile(){
 		passable = true;
 		agent = false;
 		resourceType = 0;
 		picName = "dirt";
-		
+		try{
+			img = ImageIO.read(new File("src/model/tileTest.png"));
+		}catch (IOException e){
+			e.printStackTrace();
+		}
 	
 	}
 	public String getName(){
@@ -97,12 +101,8 @@ public class Tile extends JPanel{
 		return passable;		
 	}
 	public void drawTile(Graphics g){
-		try{
-			img = ImageIO.read(new File("src/model/tileTest.png"));
-		}catch (IOException e){
-			e.printStackTrace(System.out);
-		}
-		g.drawImage(img, this.getXChord(), this.getYChord(), null);
+		
+		g.drawImage(img, this.getXChord(), this.getYChord(),50,50, null);
 		
 				
 		
