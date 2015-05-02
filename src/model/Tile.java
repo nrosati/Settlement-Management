@@ -19,12 +19,8 @@ public class Tile extends JPanel{
 		passable = true;
 		agent = false;
 		resourceType = 0;
-		picName = "dirt";
-		try{
-			img = ImageIO.read(new File("src/model/tileTest.png"));
-		}catch (IOException e){
-			e.printStackTrace();
-		}
+		picName = "src/model/dirtTile.png";
+		img = null;
 	
 	}
 	public String getName(){
@@ -66,11 +62,11 @@ public class Tile extends JPanel{
 		if(biomeNum == 2) biome = "desert";
 		if(biomeNum == 3) biome = "tundra";
 		
-		else if(resourceType == 0) picName = biome + "Dirt";
-		else if(resourceType == 1) picName = biome +"Tree";
-		else if(resourceType == 2) picName = biome +"Water";
-		else if(resourceType == 3) picName = biome + "Food";
-		else if(resourceType == 4) picName = biome + "Gold";
+		if(resourceType == 0) picName = "src/model/dirtTile.png";//biome + "Dirt";
+		else if(resourceType == 1) picName = "src/model/treeTile.png";
+		else if(resourceType == 2) picName = "src/model/waterTile.png";
+		else if(resourceType == 3) picName = "src/model/foodTile.png";
+		else if(resourceType == 4) picName = "src/model/goldTile.png";
 	}
 	
 	public boolean getAgent(){
@@ -101,8 +97,12 @@ public class Tile extends JPanel{
 		return passable;		
 	}
 	public void drawTile(Graphics g){
-		
-		g.drawImage(img, this.getXChord(), this.getYChord(),50,50, null);
+		try{
+			img = ImageIO.read(new File(picName));
+		}catch (IOException e){
+			e.printStackTrace();
+		}
+		g.drawImage(img, this.getXChord()*15, this.getYChord()*15,null);
 		
 				
 		
