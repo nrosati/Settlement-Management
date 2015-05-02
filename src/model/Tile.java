@@ -1,7 +1,7 @@
 package model;
 
 import java.awt.*;
-
+import java.awt.image.BufferedImage;
 import java.io.*;
 
 import javax.imageio.ImageIO;
@@ -14,11 +14,14 @@ public class Tile extends JPanel{
 	private boolean passable;
 	private boolean agent;
 	private String picName;
+	private BufferedImage img;
 	public Tile(){
 		passable = true;
 		agent = false;
 		resourceType = 0;
 		picName = "dirt";
+		
+	
 	}
 	public String getName(){
 		return picName;
@@ -93,19 +96,15 @@ public class Tile extends JPanel{
 	public boolean getPassable(){
 		return passable;		
 	}
-	public void drawTile(Graphics g, int height, int width){
-		//File file = new File("src/model/tileTest.png");
-		super.paintComponent(g);
+	public void drawTile(Graphics g){
 		try{
-			InputStream is = new BufferedInputStream(new FileInputStream("src/model/tileTest.png"));
-			Image image = ImageIO.read(is);
-			int x = this.getXChord();
-			int y = this.getYChord();
-			g.drawImage(image, x, y, height, width, null);//Null is something called ImageObserver?
-		} catch (IOException e){e.printStackTrace();}
+			img = ImageIO.read(new File("src/model/tileTest.png"));
+		}catch (IOException e){
+			e.printStackTrace(System.out);
+		}
+		g.drawImage(img, this.getXChord(), this.getYChord(), null);
 		
-		
-			
+				
 		
 		
 	}
