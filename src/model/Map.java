@@ -13,6 +13,13 @@ public class Map {
 	private static Map map = new Map();
 	private final String difficulty = ("easy");
 	
+	/**
+	 * We use the singleton design pattern to create our map.
+	 * This class uses MapGenerator to actually generate the
+	 * map.
+	 * Author Nick Rosati  
+	 * @return
+	 */
 	public static Map getMap(){
 		return map;
 	}
@@ -28,7 +35,11 @@ public class Map {
 	
 	
 
-
+	/**
+	 * Counts the number of resources on the map.
+	 * Author Nick Rosati
+	 * @return
+	 */
 	public int resourceCounter() {
 		int resources = 0;
 		for(int i = 0; i < 100; i++){
@@ -39,35 +50,60 @@ public class Map {
 		
 		return resources;
 	}
-	
+	/**
+	 * Returns the 2D Tile array representation of the Map
+	 * Author Nick Rosati
+	 * @return
+	 */
 	public Tile[][] getField(){
 		return field;
 	}
-	
+	/**
+	 * Returns the number of buildings on the map
+	 * Author Nick Rosati
+	 * @return
+	 */
 	public int getBuildings(){
 		return countBuildings;
 	}
-	
+	/**
+	 * Increments the building count by 1
+	 * Author Nick Rosati
+	 */
 	public void addBuilding(){
 		countBuildings++;
 	}
-	
+	/**
+	 * Adds an Agent to the Map
+	 * Author Nick Rosati
+	 */
 	public void addAgent(){
 		countAgents++;
 	}
-	
+	/**
+	 * Removes an Agent from the map
+	 * Author Nick Rosati
+	 */
 	public void removeAgent(){
 		countAgents--;
 	}
+	/**
+	 * Returns the number of agents on the map
+	 * Author Nick Rosati
+	 * @return
+	 */
 	public int getAgents(){
 		return countAgents;
 	}
+	/**
+	 * Returns the number of resources on the map
+	 * Author Nick Rosati
+	 * @return
+	 */
 	public int getResources(){
 		return countResources;
 	}
-	public boolean isOccupied(){
-		return occupied;
-	}
+	
 	
 	
 	

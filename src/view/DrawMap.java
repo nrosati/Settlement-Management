@@ -17,6 +17,7 @@ public class DrawMap extends JPanel{
 	}
 	public void init(){
 		Graphics g = im.getGraphics();
+		Tile.setImages();
 		for(int i = 0; i < 100; i++){
 			for(int j = 0; j < 100; j++){
 				field[i][j].drawTile(g);

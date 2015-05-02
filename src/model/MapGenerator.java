@@ -11,14 +11,30 @@ public class MapGenerator {
 		 field = new Tile[100][100];
 		 generateMap(difficulty, biomeType);
 	}
-	
+	/**
+	 * Returns an integer representation of the Biome type.
+	 * This number is randomly generated.
+	 * Author Nick Rosati
+	 * @return
+	 */
 	public int getBiome(){
 		return biomeType;
 		
 	}
+	/**
+	 * Returns the 2D Tile array representation
+	 * of the Map
+	 * Author Nick Rosati
+	 * @return
+	 */
 	public Tile[][] getField(){
 		return field;
 	}
+	/**
+	 * Returns a string representation of the Biome
+	 * Author Nick Rosati
+	 * @return
+	 */
 	public String getBiomeString(){
 		String biome = "";
 		int biomeNumber = getBiome();
@@ -28,6 +44,16 @@ public class MapGenerator {
 		else if(biomeNumber == 3) return biome = "Grassland";
 		else return biome = "Something went wrong";		
 	}
+	/**
+	 * Generates the map.  Takes a string represents a difficulty
+	 * and the integer biome type.  It first loops through the 2D tile array
+	 * and initializes all the tiles.  Then depending on the difficulty string 
+	 * calls generate resources and generates a map with varying numbers of 
+	 * resources.
+	 * @param difficulty
+	 * @param biomeType
+	 * @return
+	 */
 	public Tile[][] generateMap(String difficulty, int biomeType){
 		//Initializing tiles only done once
 		for(int k = 0; k < 100; k++){
@@ -119,7 +145,10 @@ public class MapGenerator {
 	}
 	
 	
-	
+	/**
+	 * Generates a random number between 0 and 3
+	 * @return
+	 */
 	public int randomGen(){
 		Random gen = new Random();
 		int min = 0;
