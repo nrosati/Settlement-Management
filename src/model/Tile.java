@@ -14,6 +14,7 @@ public class Tile extends JPanel{
 	private boolean passable;
 	private boolean agent;
 	private String picName;
+	public static Images images = Images.getImageInstance(); // Makes the images
 	private static BufferedImage img;
 	private static BufferedImage dirtTile;
 	private static BufferedImage treeTile;
@@ -195,13 +196,17 @@ public class Tile extends JPanel{
 	 * Author Nick Rosati
 	 * @param g
 	 */
-	public void drawTile(Graphics g){
-		if(this.getResourceType() == 1) img = treeTile;
-		else if(this.getResourceType() == 2) img = waterTile;
-		else if(this.getResourceType() == 3) img = foodTile;
-		else if(this.getResourceType() == 4) img = goldTile;
-		else img = dirtTile;
-		g.drawImage(img, this.getXChord()*15, this.getYChord()*15,null);
+	public void drawTile(Graphics2D g,int x, int y){//(Graphics g)
+		if(this.getResourceType() == 1) img = images.getTree();
+		else if(this.getResourceType() == 2) img = images.getWater();
+		else if(this.getResourceType() == 3) img = images.getFood();
+		else if(this.getResourceType() == 4) img = images.getGold();
+		else img = images.getDirt();
+		int w = 32;
+		int h = 32;
+		g.drawImage(img, x, y,32,32,null);
+	
+		
 		
 				
 		
