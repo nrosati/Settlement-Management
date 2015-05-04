@@ -85,4 +85,14 @@ public class Images {
 	public BufferedImage getAgentTile(){
 		return imagesList.get(5);
 	}
+	
+	public BufferedImage getSand(){
+		return imagesList.get(6);
+	}
+	public BufferedImage getJungle(){
+		return imagesList.get(7);
+	}
+	public BufferedImage getSnow(){
+		return imagesList.get(8);
+	}
 }

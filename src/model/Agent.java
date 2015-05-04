@@ -193,7 +193,8 @@ public class Agent {//Removed abstract for testing purposes
 		Building storeHouse = new Building("storeHouse");
 		if(storeHouse.getCost() > resources) built = false;
 		else if(storeHouse.getCost() <= resources){
-			if(field[x][y].getPassable() && field[x+1][y].getPassable() 
+			map.addBuilding(storeHouse, x, y);
+			/*if(field[x][y].getPassable() && field[x+1][y].getPassable() 
 					&& field[x][y+1].getPassable() && field[x+1][y+1].getPassable()){
 				field[x][y].makeImpassable();
 				field[x][y].setResourceType(5);
@@ -202,11 +203,11 @@ public class Agent {//Removed abstract for testing purposes
 				field[x][y+1].makeImpassable();
 				field[x][y+1].setResourceType(5);
 				field[x+1][y+1].makeImpassable();
-				field[x+1][y+1].setResourceType(5);
+				field[x+1][y+1].setResourceType(5);*/
 				this.storage = this.storage - storeHouse.getCost();
 				built = true;
 			}
-		}
+		//}
 		return storeHouse;
 	}
 

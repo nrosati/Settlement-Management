@@ -58,7 +58,7 @@ public class MapGenerator {
 		//Initializing tiles only done once
 		for(int k = 0; k < 100; k++){
 			for(int l = 0; l < 100; l++){
-				field[k][l] = new Tile();//Call new to place a new tile at location
+				field[k][l] = new Tile(biomeType);//Call new to place a new tile at location
 				field[k][l].setChords(k,l);//Set coordinates of tile 
 			}
 		}
@@ -83,6 +83,12 @@ public class MapGenerator {
 			generateResources(3000, 3);//Generate 2000 food tiles
 			generateResources(2000, 4);//Generate 1000 gold tiles
 		}
+		
+		for(int i = 0; i < 25; i++){
+			for(int j = 0; j < 25; j++){
+				field[i][j].setResourceType(0);
+			}
+		}
 		return field;
 	}
 	/**
@@ -105,23 +111,23 @@ public class MapGenerator {
 			//Move North, place a resource
 			if(random == 0 && i < 99){//Out of bounds check
 				i++;//Move North
-				if(field[i][j].getResourceType() == 0) field[i][j].setResourceType(what, biomeType); //If empty place
+				if(field[i][j].getResourceType() == 0) field[i][j].setResourceType(what); //biomeType); //If empty place
 				count--;
 			}
 			else if(random == 1 && i >0){//So we don't go into a negative part of the array
 				i--;
-				if(field[i][j].getResourceType() == 0) field[i][j].setResourceType(what, biomeType);//If Empty place
+				if(field[i][j].getResourceType() == 0) field[i][j].setResourceType(what);//, biomeType);//If Empty place
 				count--;
 			}
 			else if(random == 2 && j < 99){//Out of bounds check
 				j++;//Move east
-				if(field[i][j].getResourceType() == 0) field[i][j].setResourceType(what, biomeType);//If Empty place
+				if(field[i][j].getResourceType() == 0) field[i][j].setResourceType(what);//, biomeType);//If Empty place
 				count--;
 			}
 			
 			else if(random == 3 && j > 0){//So we don't subtract from zero and go out of bounds
 				j--;//Move West
-				if(field[i][j].getResourceType() == 0) field[i][j].setResourceType(what, biomeType);//If empty place
+				if(field[i][j].getResourceType() == 0) field[i][j].setResourceType(what);//, biomeType);//If empty place
 				count--;
 			}
 				
@@ -149,7 +155,7 @@ public class MapGenerator {
 	 * Generates a random number between 0 and 3
 	 * @return
 	 */
-	public int randomGen(){
+	public static int randomGen(){
 		Random gen = new Random();
 		int min = 0;
 		int max =4;

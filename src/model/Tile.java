@@ -9,9 +9,11 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Tile extends Observable{
+	private Map map = Map.getMap();
 	private int x;
 	private int y;
 	private int resourceType;
+	private int biome;
 	private boolean passable;
 	private boolean agent;
 	private String picName;
@@ -24,13 +26,13 @@ public class Tile extends Observable{
 	 * is supposed to represent.
 	 * Author: Nick Rosati
 	 */
-	public Tile(){
+	public Tile(int biome){
 		passable = true;
 		agent = false;
 		resourceType = 0;
 		picName = "src/model/dirtTile.png";
 		img = null;
-		
+		this.biome = biome;
 		//setImages();
 	}
 	
@@ -184,7 +186,12 @@ public class Tile extends Observable{
 		else if(this.getResourceType() == 3) img = images.getFood();
 		else if(this.getResourceType() == 4) img = images.getGold();
 		else if(this.getResourceType() == 7) img = images.getAgentTile();
-		else img = images.getDirt();
+		else {
+			if(biome == 3) img = images.getJungle();
+			else if(biome == 1) img = images.getSnow();
+			else if(biome == 2) img = images.getSand();
+			else img = images.getDirt();
+		}
 		int w = 32;
 		int h = 32;
 		g.drawImage(img, x, y,32,32,null);

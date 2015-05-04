@@ -3,12 +3,13 @@ package model;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
 	private Tile[][] field;
-	private int countAgents;
-	private int countBuildings;
+	private ArrayList agents;
+	private ArrayList buildings;
 	private int countResources;
 	private int biomeType;
 	private boolean occupied;
@@ -31,11 +32,13 @@ public class Map {
 		mapGen = new MapGenerator(difficulty);
 		field = mapGen.getField();
 		biomeType = mapGen.getBiome();	
-		countAgents = 1;
-		countBuildings = 0;
+		agents = new ArrayList<Agent>();
+		buildings = new ArrayList<Building>();
+		
 		countResources = resourceCounter();
 		occupied = false;		
 		drawMap();
+		
 	}
 	
 	
@@ -68,37 +71,43 @@ public class Map {
 	 * Author Nick Rosati
 	 * @return
 	 */
-	public int getBuildings(){
-		return countBuildings;
+	public ArrayList getBuildings(){
+		return buildings;
 	}
 	/**
 	 * Increments the building count by 1
 	 * Author Nick Rosati
 	 */
-	public void addBuilding(){
-		countBuildings++;
+	public void addBuilding(Building building, int x, int y){
+		buildings.add(building);
+		field[x][y].setResourceType(5);//Left Corner
+		//field[x+1][y].setResourceType(6);//Right Corner
+		//field[x][y+1].setResourceType(9);
+		//field[x+1][y+1].setResourceType(10);
 	}
 	/**
 	 * Adds an Agent to the Map
 	 * Author Nick Rosati
 	 */
-	public void addAgent(){
-		countAgents++;
+	public void addAgent(String name, int x, int y){
+		Agent agent = new Agent(name, x, y);
+		agents.add(agent);
+		field[x][y].setResourceType(7);
 	}
 	/**
 	 * Removes an Agent from the map
 	 * Author Nick Rosati
 	 */
-	public void removeAgent(){
-		countAgents--;
+	public void removeAgent(Agent agent){
+		agents.remove(agent);
 	}
 	/**
 	 * Returns the number of agents on the map
 	 * Author Nick Rosati
 	 * @return
 	 */
-	public int getAgents(){
-		return countAgents;
+	public ArrayList getAgents(){
+		return agents;
 	}
 	/**
 	 * Returns the number of resources on the map
@@ -128,6 +137,10 @@ public class Map {
 	 */
 	public BufferedImage getMapImage(){
 		return mapImage;
+	}
+	public int getBiome() {
+		// TODO Auto-generated method stub
+		return biomeType;
 	}
 	
 	
