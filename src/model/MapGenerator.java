@@ -7,7 +7,7 @@ public class MapGenerator {
 	
 	
 	public MapGenerator(String difficulty) {
-		 int biomeType = randomGen();
+		 int biomeType = randomGen();//Generate the biome type, random number between 0 and 3
 		 field = new Tile[100][100];
 		 generateMap(difficulty, biomeType);
 	}
@@ -94,10 +94,10 @@ public class MapGenerator {
 	public void generateResources(int numResource, int kindResource){
 		
 		
-		int count = numResource;
-		int what = kindResource;
+		int count = numResource;//how many of these resources
+		int what = kindResource;//what resource
 	
-		int i = 50;
+		int i = 50;//Start in the middle of the map
 		int j = 50;
 		
 		while(count > 0){

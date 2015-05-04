@@ -108,7 +108,10 @@ public class Map {
 	public int getResources(){
 		return countResources;
 	}
-public void drawMap(){
+	/**
+	 * Draws the tile images to one large bufferedImage
+	 */
+	public void drawMap(){
 		
 		mapImage = new BufferedImage(3200,3200, Image.SCALE_SMOOTH);
 		Graphics2D g = (Graphics2D) mapImage.getGraphics();
@@ -118,9 +121,14 @@ public void drawMap(){
 			}
 		}
 	}
-public BufferedImage getMapImage(){
-	return mapImage;
-}
+	/**
+	 * Returns the mapImage containing all of the tiles painted to 
+	 * one large BufferedImage
+	 * @return
+	 */
+	public BufferedImage getMapImage(){
+		return mapImage;
+	}
 	
 	
 	

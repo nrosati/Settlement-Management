@@ -19,8 +19,15 @@ public class HasiMapTest extends JPanel{
 		panel.setPreferredSize(new Dimension(32 * 100, 32 * 100));
 		panel = new JPanel();
 		final long serialVersionUID = 3277456389480389779L;
-		
-				
+	}
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		g.drawImage(map.getMapImage(),0,0,null);
 		
 	}
+				
+	public static void main(String[] args){
+		makeMapPanel();
+	}
+	
 }

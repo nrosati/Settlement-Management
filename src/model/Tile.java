@@ -3,11 +3,12 @@ package model;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Observable;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Tile extends JPanel{
+public class Tile extends Observable{
 	private int x;
 	private int y;
 	private int resourceType;
@@ -16,11 +17,7 @@ public class Tile extends JPanel{
 	private String picName;
 	public static Images images = Images.getImageInstance(); // Makes the images
 	private static BufferedImage img;
-	private static BufferedImage dirtTile;
-	private static BufferedImage treeTile;
-	private static BufferedImage foodTile;
-	private static BufferedImage goldTile;
-	private static BufferedImage waterTile;
+
 	/**
 	 * Tile class.  A tile holds all the information for that piece on the game map.
 	 * Mainly x and y coordinates, an image to draw, and what kind of object the tile
@@ -33,20 +30,11 @@ public class Tile extends JPanel{
 		resourceType = 0;
 		picName = "src/model/dirtTile.png";
 		img = null;
+		
 		//setImages();
 	}
 	
-	public static void setImages(){
-		try{
-			dirtTile = ImageIO.read(new File("src/model/dirtTile.png"));
-			treeTile = ImageIO.read(new File("src/model/treeTile.png"));
-			foodTile = ImageIO.read(new File("src/model/foodTile.png"));
-			goldTile = ImageIO.read(new File("src/model/goldTile.png"));
-			waterTile = ImageIO.read(new File("src/model/waterTile.png"));
-		} catch (IOException e){
-			e.printStackTrace();
-		}
-	}
+
 	/**
 	 * Returns a string representation of what the tile is 
 	 * supposed to represent.
@@ -116,6 +104,8 @@ public class Tile extends JPanel{
 	 */
 	public void setResourceType(int r){
 		resourceType = r;
+		setChanged();
+		notifyObservers(this);
 	}
 	/**
 	 * Sets the integer value for what this tile is supposed to do,
@@ -126,19 +116,10 @@ public class Tile extends JPanel{
 	 * @param resourceType
 	 * @param biomeNum
 	 */
-	public void setResourceType(int resourceType, int biomeNum){
+	public void setResourceType(int resourceType, String Name){
 		this.resourceType = resourceType;
-		String biome = "";
-		if(biomeNum == 0) biome = "grassLand";
-		if(biomeNum == 1) biome = "jungle";
-		if(biomeNum == 2) biome = "desert";
-		if(biomeNum == 3) biome = "tundra";
 		
-		if(resourceType == 0) picName = "src/model/dirtTile.png";//biome + "Dirt";
-		else if(resourceType == 1) picName = "src/model/treeTile.png";
-		else if(resourceType == 2) picName = "src/model/waterTile.png";
-		else if(resourceType == 3) picName = "src/model/foodTile.png";
-		else if(resourceType == 4) picName = "src/model/goldTile.png";
+		
 	}
 	/**
 	 * Returns a boolean if the Agent is on this tile or not
@@ -159,6 +140,7 @@ public class Tile extends JPanel{
 		if(passable = true){
 			agent = true;
 			picName = "Agent";
+			setResourceType(7);
 			return agent;
 			
 		}
@@ -201,6 +183,7 @@ public class Tile extends JPanel{
 		else if(this.getResourceType() == 2) img = images.getWater();
 		else if(this.getResourceType() == 3) img = images.getFood();
 		else if(this.getResourceType() == 4) img = images.getGold();
+		else if(this.getResourceType() == 7) img = images.getAgentTile();
 		else img = images.getDirt();
 		int w = 32;
 		int h = 32;
