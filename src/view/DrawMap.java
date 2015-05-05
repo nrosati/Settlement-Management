@@ -19,9 +19,9 @@ public class DrawMap extends JPanel implements Observer{
 	private JPanel panel, controlPanel, buttons;
 	private JList<String> agentList;
 	private DefaultListModel<String> list;
-	private JButton addAgent, buildStoreHouse, buildBarracks, gatherFood, gatherGold, gatherWood;
+	private JButton addAgent, buildStoreHouse, buildBarracks, gatherFood, gatherGold, gatherWood, water;
 	/**
-	 * Test for drawing the Map
+	 * Initializes the various components of the map
 	 */
 	public DrawMap() {
 		makePanel();
@@ -32,6 +32,11 @@ public class DrawMap extends JPanel implements Observer{
 		
 		
 	}
+	/**
+	 * First adds the current class as an observer for all the tiles.
+	 * Sets the size of the map panel and adds it to the scroll wrapper
+	 * which then also sets the size.
+	 */
 	public void init(){
 		//map.getMapImage();
 		
@@ -49,6 +54,9 @@ public class DrawMap extends JPanel implements Observer{
 		//wrapper.setViewportView(new JViewport().add(agentList));
 		//this.add(wrapper);
 	}
+	/**
+	 * Makes a JPanel which holds the map image
+	 */
 	public void makePanel(){
 		panel = new JPanel(){
 			public void paintComponent(Graphics g){
@@ -58,6 +66,10 @@ public class DrawMap extends JPanel implements Observer{
 			}
 		};
 	}
+	/**
+	 * Creates the agent list and the button panel.
+	 * Creates the buttons and adds them to the panel.
+	 */
 	public void makeControls(){
 		controlPanel = new JPanel();
 		list = new DefaultListModel<String>();
@@ -89,6 +101,9 @@ public class DrawMap extends JPanel implements Observer{
 		gatherGold = new JButton();
 		gatherGold.setText("Gather Gold");
 		gatherGold.setVisible(true);
+		water = new JButton();
+		water.setText("Gather Water");
+		water.setVisible(true);
 		buttons = new JPanel();
 		buttons.add(addAgent);
 		buttons.add(buildStoreHouse);
@@ -96,8 +111,11 @@ public class DrawMap extends JPanel implements Observer{
 		buttons.add(gatherGold);
 		buttons.add(gatherWood);
 		buttons.add(gatherFood);
+		buttons.add(water);
 	}
-	
+	/**
+	 * Returns the listeners to the buttons
+	 */
 	private void RegisterListeners(){
 		GameListeners gl = new GameListeners();
 		addAgent.addActionListener(gl);
@@ -106,8 +124,14 @@ public class DrawMap extends JPanel implements Observer{
 		gatherWood.addActionListener(gl);
 		gatherFood.addActionListener(gl);
 		gatherGold.addActionListener(gl);
+		water.addActionListener(gl);
 	}
-	
+	/**
+	 * Creates the action listeners.  Mainly adds an agent
+	 * builds two buildings, or gather a given resource.
+	 * @author Nick
+	 *
+	 */
 	private class GameListeners implements ActionListener{
 
 		@Override
@@ -141,10 +165,19 @@ public class DrawMap extends JPanel implements Observer{
 				Agent agent = map.getAgents().get(select);
 				//agent.gatherResource(4)
 			}
+			if(e.getSource() == water){
+				int select = agentList.getSelectedIndex();
+				Agent agent = map.getAgents().get(select);
+				//agent.gatherResource(2)
+			}
 		}
 		
 	}
-	
+	/**
+	 * Main method adds all the panels to the frame and sets
+	 * the frames default size.
+	 * @param args
+	 */
 	public static void main(String[] args){
 		Map map = Map.getMap();
 		
@@ -169,6 +202,10 @@ public class DrawMap extends JPanel implements Observer{
 		
 		
 	}
+	/**
+	 * Observable update method.  Updates the list of agents
+	 * and the map image.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		System.out.println("About to update tile");
