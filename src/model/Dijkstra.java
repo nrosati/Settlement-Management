@@ -30,7 +30,7 @@ public class Dijkstra {
     unSettledNodes = new HashSet<Vertex>();
     distance = new HashMap<Vertex, Integer>();
     predecessors = new HashMap<Vertex, Vertex>();
-    distance.put(source, 0);
+    //distance.put(source, 0);
     unSettledNodes.add(source);
     while (unSettledNodes.size() > 0) {
       Vertex node = getMinimum(unSettledNodes);
