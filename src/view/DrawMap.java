@@ -152,6 +152,7 @@ public class DrawMap extends JPanel implements Observer{
 		frame.setLayout(new BorderLayout());
 		DrawMap draw = new DrawMap();
 		map.addAgent("Socrates", 1, 1);
+		
 		map.addAgent("Plato", 1, 3);
 		map.addAgent("Hercules", 1, 5);
 		frame.add(draw.wrapper, BorderLayout.WEST);
