@@ -1,5 +1,7 @@
 package view;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
@@ -14,13 +16,19 @@ public class DrawMap extends JPanel implements Observer{
 	private Tile[][] field = map.getField();
 	private BufferedImage img = map.getMapImage();
 	private JScrollPane wrapper;
-	private JPanel panel;
+	private JPanel panel, controlPanel, buttons;
+	private JList<String> agentList;
+	private DefaultListModel<String> list;
+	private JButton addAgent, buildStoreHouse, buildBarracks, gatherFood, gatherGold, gatherWood;
 	/**
 	 * Test for drawing the Map
 	 */
 	public DrawMap() {
 		makePanel();
+		makeControls();
 		init();
+		RegisterListeners();
+		
 		
 		
 	}
@@ -35,9 +43,10 @@ public class DrawMap extends JPanel implements Observer{
 		panel.setSize(new Dimension(32 * 100, 32 * 100));
 		panel.setPreferredSize(new Dimension(32 * 100, 32 * 100));
 		wrapper = new JScrollPane(panel);
-		wrapper.setSize(new Dimension(600, 400));
-		wrapper.setPreferredSize(new Dimension(600,400));
+		wrapper.setSize(new Dimension(800, 600));
+		wrapper.setPreferredSize(new Dimension(800,600));
 		wrapper.setViewportView(new JViewport().add(panel));
+		//wrapper.setViewportView(new JViewport().add(agentList));
 		//this.add(wrapper);
 	}
 	public void makePanel(){
@@ -49,26 +58,109 @@ public class DrawMap extends JPanel implements Observer{
 			}
 		};
 	}
+	public void makeControls(){
+		controlPanel = new JPanel();
+		list = new DefaultListModel<String>();
+		for(Agent agent: map.getAgents()){
+			String element = agent.getName();
+			list.addElement(element);
+		}
+		agentList = new JList<String>(list);
+		agentList.setSize(new Dimension(200, 200));
+		agentList.setPreferredSize(new Dimension(200, 200));
+		agentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		agentList.setVisible(true);
+		
+		addAgent = new JButton();
+		addAgent.setText("Add Agent");
+		addAgent.setVisible(true);
+		buildStoreHouse = new JButton();
+		buildStoreHouse.setText("Build Store House");
+		buildStoreHouse.setVisible(true);
+		buildBarracks = new JButton();
+		buildBarracks.setText("Build Barracks");
+		buildBarracks.setVisible(true);
+		gatherWood = new JButton();
+		gatherWood.setText("Gather Wood");
+		gatherWood.setVisible(true);
+		gatherFood = new JButton();
+		gatherFood.setText("Gather Food");
+		gatherFood.setVisible(true);
+		gatherGold = new JButton();
+		gatherGold.setText("Gather Gold");
+		gatherGold.setVisible(true);
+		buttons = new JPanel();
+		buttons.add(addAgent);
+		buttons.add(buildStoreHouse);
+		buttons.add(buildBarracks);
+		buttons.add(gatherGold);
+		buttons.add(gatherWood);
+		buttons.add(gatherFood);
+	}
+	
+	private void RegisterListeners(){
+		GameListeners gl = new GameListeners();
+		addAgent.addActionListener(gl);
+	}
+	
+	private class GameListeners implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getSource() == addAgent)map.addAgent("Agent", 1, 7);
+			if(e.getSource() == buildStoreHouse){
+				int select = agentList.getSelectedIndex();
+				Agent agent = map.getAgents().get(select);
+				agent.buildBuilding("StoreHouse", agent.getXLoc(), agent.getYLoc());
+				
+			}
+			if(e.getSource() == buildBarracks){
+				int select = agentList.getSelectedIndex();
+				Agent agent = map.getAgents().get(select);
+				agent.buildBuilding("Barracks", agent.getXLoc(), agent.getYLoc());
+			}	
+			if(e.getSource() == gatherWood){
+				int select = agentList.getSelectedIndex();
+				Agent agent = map.getAgents().get(select);
+				//agent.gatherResource(1) should pass it an int then the agent will go looking for that resource
+			}
+			if(e.getSource() == gatherFood){
+				int select = agentList.getSelectedIndex();
+				Agent agent = map.getAgents().get(select);
+				//agent.gatherResource(3)
+			}
+			if(e.getSource() == gatherGold){
+				int select = agentList.getSelectedIndex();
+				Agent agent = map.getAgents().get(select);
+				//agent.gatherResource(4)
+			}
+		}
+		
+	}
 	
 	public static void main(String[] args){
+		Map map = Map.getMap();
+		
 		JFrame frame = new JFrame("GameMap");
+		frame.setLayout(new BorderLayout());
 		DrawMap draw = new DrawMap();
-		frame.add(draw.wrapper);
+		map.addAgent("Socrates", 1, 1);
+		map.addAgent("Plato", 1, 3);
+		map.addAgent("Hercules", 1, 5);
+		frame.add(draw.wrapper, BorderLayout.WEST);
+		frame.add(draw.buttons, BorderLayout.SOUTH);
+		
+		frame.add(draw.agentList,BorderLayout.EAST);
+		
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setSize(3200,3200);
 		frame.setVisible(true);
 		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Map map = Map.getMap();
-		map.addAgent("Socrates", 1, 1);
-		map.addAgent("Plato", 1, 3);
-		map.addAgent("Hercules", 1, 5);
+		
+		
+		
 	}
 	@Override
 	public void update(Observable o, Object arg) {
@@ -77,6 +169,11 @@ public class DrawMap extends JPanel implements Observer{
 		((Tile) arg).drawTile(g, ((Tile) arg).getXChord() * 32, ((Tile) arg).getYChord() * 32);
 		//map.drawMap();
 		//img = map.getMapImage();
+		list.clear();
+		for(Agent agent: map.getAgents()){
+			String element = agent.getName();
+			list.addElement(element);
+		}
 		repaint();
 		wrapper.setViewportView(new JViewport().add(panel));
 		System.out.println("Tile was changed");

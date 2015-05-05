@@ -188,27 +188,30 @@ public class Agent {//Removed abstract for testing purposes
 		return deposited;
 	}
 	
-	public Building buildBuilding(int resources, int x, int y){
+	public Building buildBuilding(String name, int x, int y){
 		boolean built = false;
-		Building storeHouse = new Building("storeHouse");
-		if(storeHouse.getCost() > resources) built = false;
-		else if(storeHouse.getCost() <= resources){
-			map.addBuilding(storeHouse, x, y);
-			/*if(field[x][y].getPassable() && field[x+1][y].getPassable() 
+		int build =5;
+		Building building = new Building(name);
+		if(building.getCost() > storage) built = false;
+		else if(building.getCost() <= storage){
+			map.addBuilding(building, x, y);
+			if(name.equals("StoreHouse"))build = 5;
+			if(name.equals("Barracks"))build = 6;
+			if(field[x][y].getPassable() && field[x+1][y].getPassable() 
 					&& field[x][y+1].getPassable() && field[x+1][y+1].getPassable()){
 				field[x][y].makeImpassable();
-				field[x][y].setResourceType(5);
+				field[x][y].setResourceType(build);
 				field[x+1][y].makeImpassable();
-				field[x+1][y].setResourceType(5);
+				field[x+1][y].setResourceType(build);
 				field[x][y+1].makeImpassable();
-				field[x][y+1].setResourceType(5);
+				field[x][y+1].setResourceType(build);
 				field[x+1][y+1].makeImpassable();
-				field[x+1][y+1].setResourceType(5);*/
-				this.storage = this.storage - storeHouse.getCost();
+				field[x+1][y+1].setResourceType(build);
+				this.storage = this.storage - building.getCost();
 				built = true;
 			}
-		//}
-		return storeHouse;
+		}
+		return building;
 	}
 
 }

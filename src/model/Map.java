@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Map {
 	private Tile[][] field;
-	private ArrayList agents;
+	private ArrayList<Agent> agents;
 	private ArrayList buildings;
 	private int countResources;
 	private int biomeType;
@@ -106,7 +106,7 @@ public class Map {
 	 * Author Nick Rosati
 	 * @return
 	 */
-	public ArrayList getAgents(){
+	public ArrayList<Agent> getAgents(){
 		return agents;
 	}
 	/**

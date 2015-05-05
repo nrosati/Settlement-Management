@@ -95,4 +95,10 @@ public class Images {
 	public BufferedImage getSnow(){
 		return imagesList.get(8);
 	}
+	public BufferedImage getStoreHouse(){
+		return imagesList.get(9);
+	}
+	public BufferedImage getBarracks(){
+		return imagesList.get(10);
+	}
 }
