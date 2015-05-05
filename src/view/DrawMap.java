@@ -165,6 +165,7 @@ public class DrawMap extends JPanel implements Observer{
 				Agent agent = map.getAgents().get(select);
 				try {
 					agent.gatherResources(3);
+					//agent.setAgent(agent.getDx(),agent.getDy());
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -175,6 +176,7 @@ public class DrawMap extends JPanel implements Observer{
 				Agent agent = map.getAgents().get(select);
 				try {
 					agent.gatherResources(4);
+					//agent.setAgent(agent.getDx(),agent.getDy());
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -185,6 +187,7 @@ public class DrawMap extends JPanel implements Observer{
 				Agent agent = map.getAgents().get(select);
 				try {
 					agent.gatherResources(2);
+					//agent.setAgent(agent.getDx(),agent.getDy());
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

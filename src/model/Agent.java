@@ -206,16 +206,16 @@ public class Agent {//Removed abstract for testing purposes
 						closestDistance = calculateDistance.distanceFormula(getXLoc(), getYLoc(), i, j);
 						if (closestDistance < min) {
 							min = closestDistance;
-							this.dx = i;// These may need to be switched around
-							this.dy = j;// These may need to be switched around
+							this.setDx(i);// These may need to be switched around
+							this.setDy(j);// These may need to be switched around
 						}
-
+						
 					}
-
+					
 				}
-
+					
 			}
-			ShortestPath path = new ShortestPath(getXLoc(),getYLoc(),dx,dy);
+			ShortestPath path = new ShortestPath(getXLoc(),getYLoc(),getDx(),getDy());
 			/*for (int i = 0; i < capacity; i++) {
 				//Thread.sleep(1000); // I want to incorporate the Timer library
 									// later because it uses
@@ -223,6 +223,9 @@ public class Agent {//Removed abstract for testing purposes
 				System.out.println(this.storage); // less resources. For now
 													// this should be good.
 			}*/
+			locationX = dx;
+			locationY = dy;
+			setAgent(locationX, locationY);
 			return this.storage;
 		}
 	/**
@@ -311,9 +314,11 @@ public class Agent {//Removed abstract for testing purposes
 	 * @param y
 	 * @return
 	 */
-	public Building buildBuilding(String name, int x, int y){
+	public Building buildBuilding(String name, int xX, int yY){
 		boolean built = false;
 		int build =5;
+		int x = locationX;
+		int y = locationY;
 		Building building = new Building(name);
 		if(building.getCost() > storage) built = false;
 		else if(building.getCost() <= storage){
@@ -336,6 +341,22 @@ public class Agent {//Removed abstract for testing purposes
 			}
 		}
 		return building;
+	}
+
+	public int getDy() {
+		return dy;
+	}
+
+	public void setDy(int dy) {
+		this.dy = dy;
+	}
+
+	public int getDx() {
+		return dx;
+	}
+
+	public void setDx(int dx) {
+		this.dx = dx;
 	}
 
 }
