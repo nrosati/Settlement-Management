@@ -9,8 +9,8 @@ import java.util.Random;
 public class Map {
 	private Tile[][] field;
 	private ArrayList<Agent> agents;
-	private ArrayList buildings;
-	private int countResources;
+	private ArrayList<Building> buildings;
+	private int foodCount;
 	private int biomeType;
 	private boolean occupied;
 	private MapGenerator mapGen;
@@ -35,7 +35,7 @@ public class Map {
 		agents = new ArrayList<Agent>();
 		buildings = new ArrayList<Building>();
 		
-		countResources = resourceCounter();
+		foodCount = 4;
 		occupied = false;		
 		drawMap();
 		
@@ -49,14 +49,15 @@ public class Map {
 	 * @return
 	 */
 	public int resourceCounter() {
-		int resources = 0;
-		for(int i = 0; i < 100; i++){
-			for(int j = 0; j < 100; j++){
-				if(field[i][j].getResourceType() != 0) countResources++;
-			}
+		int count = 0;
+		for(Building building: buildings){
+			String name = building.getName();
+			if(name.equals("Barracks"));
+				foodCount += building.getFoodCount();
+				count += 4;
 		}
 		
-		return resources;
+		return count;
 	}
 	/**
 	 * Returns the 2D Tile array representation of the Map
@@ -90,9 +91,14 @@ public class Map {
 	 * Author Nick Rosati
 	 */
 	public void addAgent(String name, int x, int y){
+		if(foodCount > 0){
 		Agent agent = new Agent(name, x, y);
 		agents.add(agent);
 		field[x][y].setResourceType(7);
+		foodCount--;
+		//agent slowly die - should have him start moving around and searching for food
+		}
+		else System.out.println("Not enough barracks space");
 	}
 	/**
 	 * Removes an Agent from the map
@@ -115,7 +121,7 @@ public class Map {
 	 * @return
 	 */
 	public int getResources(){
-		return countResources;
+		return foodCount;
 	}
 	/**
 	 * Draws the tile images to one large bufferedImage

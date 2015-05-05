@@ -7,6 +7,7 @@ public class Building {
 	private boolean dense;
 	private Tile [][] size;
 	private int storage;
+	private int foodCount;
 	private String buildingType;
 	
 	private int cost;
@@ -17,6 +18,12 @@ public class Building {
 		this.dense = dense;
 		buildingType = building;
 		storage = 0;
+	}
+	public String getName(){
+		return buildingType;
+	}
+	public int getFoodCount(){
+		return foodCount;
 	}
 	
 	/**
