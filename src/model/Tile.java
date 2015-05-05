@@ -189,6 +189,7 @@ public class Tile extends Observable{
 		else if(this.getResourceType() == 7) img = images.getAgentTile();
 		else if(this.getResourceType() == 5) img = images.getStoreHouse();
 		else if(this.getResourceType() == 6) img = images.getBarracks();
+		else if(this.getResourceType() == 8) img = images.getPhilosopher();
 		else {
 			if(biome == 3) img = images.getJungle();
 			else if(biome == 1) img = images.getSnow();

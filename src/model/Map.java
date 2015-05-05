@@ -146,7 +146,17 @@ public class Map {
 		return biomeType;
 	}
 	
-	
+	public static String nameGen(){
+		String name = "";
+		int random = MapGenerator.randomGen();
+		if(random == 0) name = "Leonidus";
+		else if(random == 1) name = "Corialanus";
+		else if(random == 2) name = "Maximus";
+		else if(random == 3) name = "Themistocles";
+		else name = "Achilles";
+		return name;
+		
+	}
 	
 	
 

@@ -263,6 +263,7 @@ public class Agent {//Removed abstract for testing purposes
 				System.out.println("Due to a lack of energy, " + this.name + " has sat down and dedicated his life to philosophy");
 				this.hungry = false;
 				this.isPhilosopher = true;
+				//Need to set the resource type of the tile to 8
 			}
 
 		}

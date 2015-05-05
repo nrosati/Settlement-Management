@@ -137,7 +137,7 @@ public class DrawMap extends JPanel implements Observer{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			if(e.getSource() == addAgent)map.addAgent("Agent", 1, 7);
+			if(e.getSource() == addAgent)map.addAgent(map.nameGen(), MapGenerator.randomGen()+4, MapGenerator.randomGen()+4);
 			if(e.getSource() == buildStoreHouse){
 				int select = agentList.getSelectedIndex();
 				Agent agent = map.getAgents().get(select);
@@ -153,22 +153,42 @@ public class DrawMap extends JPanel implements Observer{
 			if(e.getSource() == gatherWood){
 				int select = agentList.getSelectedIndex();
 				Agent agent = map.getAgents().get(select);
-				//agent.gatherResource(1) should pass it an int then the agent will go looking for that resource
+				try {
+					agent.gatherResources(1);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} //should pass it an int then the agent will go looking for that resource
 			}
 			if(e.getSource() == gatherFood){
 				int select = agentList.getSelectedIndex();
 				Agent agent = map.getAgents().get(select);
-				//agent.gatherResource(3)
+				try {
+					agent.gatherResources(3);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			if(e.getSource() == gatherGold){
 				int select = agentList.getSelectedIndex();
 				Agent agent = map.getAgents().get(select);
-				//agent.gatherResource(4)
+				try {
+					agent.gatherResources(4);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			if(e.getSource() == water){
 				int select = agentList.getSelectedIndex();
 				Agent agent = map.getAgents().get(select);
-				//agent.gatherResource(2)
+				try {
+					agent.gatherResources(2);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 		
@@ -184,9 +204,9 @@ public class DrawMap extends JPanel implements Observer{
 		JFrame frame = new JFrame("GameMap");
 		frame.setLayout(new BorderLayout());
 		DrawMap draw = new DrawMap();
-		map.addAgent("Socrates", 1, 1);
+		map.addAgent("Socrates", 2, 1);
 		
-		map.addAgent("Plato", 1, 3);
+		map.addAgent("Plato", 2, 3);
 		map.addAgent("Hercules", 1, 5);
 		frame.add(draw.wrapper, BorderLayout.WEST);
 		frame.add(draw.buttons, BorderLayout.SOUTH);

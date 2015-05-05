@@ -124,4 +124,7 @@ public class Images {
 	public BufferedImage getBarracks(){
 		return imagesList.get(10);
 	}
+	public BufferedImage getPhilosopher(){
+		return imagesList.get(11);
+	}
 }
