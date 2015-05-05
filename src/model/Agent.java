@@ -35,14 +35,8 @@ public class Agent {//Removed abstract for testing purposes
 	protected boolean isWarrior;
 	protected boolean isPriest;
 
-	private int resource; // the current resource that the agent i
+	private Resources resource; // the current resource that the agent i
 								// carrying. null if none.
-	
-	private int dx;
-	private int dy;
-	
-	private Timer test;
-
 
 	private Image image;
 
@@ -127,7 +121,7 @@ public class Agent {//Removed abstract for testing purposes
 		return this.selected;
 	}
 	
-	public int getResource() {
+	public Resources getResource() {
 		return this.resource;
 	}
 	
@@ -135,34 +129,15 @@ public class Agent {//Removed abstract for testing purposes
 		field[i][j].setResourceType(7);
 	}
 
-	public int gatherResources(int resource) throws InterruptedException {
+	public int gatherResources(Resources resource) throws InterruptedException {
 		this.resource = resource;
-		int closestDistance = 0;
-		int min = Integer.MAX_VALUE;
-		DistanceFormula calculateDistance = new DistanceFormula();
-		for (int i = 0; i < 100; i++) {
-			for (int j = 0; j < 100; j++) {
-				if (field[i][j].getResourceType() == resource) {
-					closestDistance = calculateDistance.distanceFormula(getXLoc(), getYLoc(), i, j);
-					if (closestDistance < min) {
-						min = closestDistance;
-						this.dx = i;// These may need to be switched around
-						this.dy = j;// These may need to be switched around
-					}
-
-				}
-
-			}
-
-		}
-		ShortestPath path = new ShortestPath(getXLoc(),getYLoc(),dx,dy);
-		/*for (int i = 0; i < capacity; i++) {
+		for (int i = 0; i < capacity; i++) {
 			//Thread.sleep(1000); // I want to incorporate the Timer library
 								// later because it uses
 			this.storage++;
 			System.out.println(this.storage); // less resources. For now
 												// this should be good.
-		}*/
+		}
 		return this.storage;
 	}
 	
