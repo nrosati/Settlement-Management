@@ -79,12 +79,9 @@ public class Map {
 	 * Increments the building count by 1
 	 * Author Nick Rosati
 	 */
-	public void addBuilding(Building building, int x, int y){
+	public void addBuilding(Building building){
 		buildings.add(building);
-		field[x][y].setResourceType(5);//Left Corner
-		//field[x+1][y].setResourceType(6);//Right Corner
-		//field[x][y+1].setResourceType(9);
-		//field[x+1][y+1].setResourceType(10);
+		if(building.getName().equals("Barracks"))foodCount +=4;
 	}
 	/**
 	 * Adds an Agent to the Map

@@ -106,6 +106,7 @@ public class Tile extends Observable{
 	 */
 	public void setResourceType(int r){
 		resourceType = r;
+		if(r == 2)passable = false;
 		setChanged();
 		notifyObservers(this);
 	}
