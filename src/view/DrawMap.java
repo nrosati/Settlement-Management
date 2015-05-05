@@ -101,6 +101,11 @@ public class DrawMap extends JPanel implements Observer{
 	private void RegisterListeners(){
 		GameListeners gl = new GameListeners();
 		addAgent.addActionListener(gl);
+		buildStoreHouse.addActionListener(gl);
+		buildBarracks.addActionListener(gl);
+		gatherWood.addActionListener(gl);
+		gatherFood.addActionListener(gl);
+		gatherGold.addActionListener(gl);
 	}
 	
 	private class GameListeners implements ActionListener{
@@ -118,6 +123,7 @@ public class DrawMap extends JPanel implements Observer{
 			if(e.getSource() == buildBarracks){
 				int select = agentList.getSelectedIndex();
 				Agent agent = map.getAgents().get(select);
+				System.out.print(agent.getName());
 				agent.buildBuilding("Barracks", agent.getXLoc(), agent.getYLoc());
 			}	
 			if(e.getSource() == gatherWood){
