@@ -16,9 +16,9 @@ public class DrawMap extends JPanel implements Observer{
 	private Tile[][] field = map.getField();
 	private BufferedImage img = map.getMapImage();
 	private JScrollPane wrapper;
-	private JPanel panel, controlPanel, buttons;
-	private JList<String> agentList;
-	private DefaultListModel<String> list;
+	private JPanel panel, controlPanel, buttons, listPanel;
+	private JList<String> agentList, resourceList;
+	private DefaultListModel<String> list, listTwo;
 	private JButton addAgent, buildStoreHouse, buildBarracks, gatherFood, gatherGold, gatherWood, water, depositResources;
 	/**
 	 * Initializes the various components of the map
@@ -71,17 +71,33 @@ public class DrawMap extends JPanel implements Observer{
 	 * Creates the buttons and adds them to the panel.
 	 */
 	public void makeControls(){
+		listPanel = new JPanel();
+		listPanel.setLayout(new BorderLayout());
 		controlPanel = new JPanel();
 		list = new DefaultListModel<String>();
+		listTwo = new DefaultListModel<String>();
 		for(Agent agent: map.getAgents()){
 			String element = agent.getName();
+			
 			list.addElement(element);
 		}
 		agentList = new JList<String>(list);
-		agentList.setSize(new Dimension(200, 200));
-		agentList.setPreferredSize(new Dimension(200, 200));
+		agentList.setSize(new Dimension(400, 400));
+		agentList.setPreferredSize(new Dimension(400, 400));
 		agentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		agentList.setVisible(true);
+		
+		listTwo.addElement("Deposited Wood = " + map.getWorldWood());
+		listTwo.addElement("Deposited Food = " + map.getWorldFood());
+		listTwo.addElement("Deposited Gold = " + map.getWorldGold());
+				
+		resourceList = new JList<String>(listTwo);
+		resourceList.setSize(new Dimension(200,200));
+		resourceList.setPreferredSize(new Dimension(200, 200));
+		resourceList.setVisible(true);
+		
+		listPanel.add(agentList, BorderLayout.NORTH);
+		listPanel.add(resourceList, BorderLayout.SOUTH);
 		
 		addAgent = new JButton();
 		addAgent.setText("Add Agent");
@@ -229,7 +245,8 @@ public class DrawMap extends JPanel implements Observer{
 		frame.add(draw.wrapper, BorderLayout.WEST);
 		frame.add(draw.buttons, BorderLayout.SOUTH);
 		
-		frame.add(draw.agentList,BorderLayout.EAST);
+		frame.add(draw.listPanel,BorderLayout.EAST);
+		
 		
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -253,17 +270,20 @@ public class DrawMap extends JPanel implements Observer{
 		//img = map.getMapImage();
 		list.clear();
 		for(Agent agent: map.getAgents()){
-			String element = agent.getName() + " Health = " + agent.getHealth();
+			//agent.addObserver(this);
+			String element = agent.getName() + " Health = " + agent.getHealth() 
+					+ " Wood = " + agent.getFoodCount() + " Water = " + agent.getWaterCount() 
+					+ " Gold = " + agent.getGoldCount();
 			list.addElement(element);
-			try {
-				agent.slowlyDie();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			//agent.slo
-			agent.addObserver(this);
+			//agent.addObserver(this);
 		}
+		listTwo.clear();
+		listTwo.addElement("Deposited Wood = " + map.getWorldWood());
+		listTwo.addElement("Deposited Food = " + map.getWorldFood());
+		listTwo.addElement("Deposited Gold = " + map.getWorldGold());
+		
 		repaint();
 		wrapper.setViewportView(new JViewport().add(panel));
 		System.out.println("Tile was changed");

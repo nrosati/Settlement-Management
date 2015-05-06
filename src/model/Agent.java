@@ -11,7 +11,7 @@ import java.awt.Image;
 import java.util.Observable;
 import java.util.Timer;
 
-public class Agent extends Observable{//Removed abstract for testing purposes
+public class Agent {//extends Observable{//Removed abstract for testing purposes
 	private String name;
 	// private List<Resources> resources;
 	protected int strength;
@@ -95,6 +95,12 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 		this.isPriest = false;
 		
 		this.walking  = false;
+		try {
+			this.slowlyDie();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
@@ -349,8 +355,8 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 					}
 
 				}
-				setChanged();
-				notifyObservers(this);
+				//setChanged();
+				//notifyObservers();
 			}
 		};
 			
@@ -393,8 +399,8 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 						int y = locationY;
 						field[x-1][y].setResourceType(8);	
 					}
-					setChanged();
-					notifyObservers(this);
+					//setChanged();
+					//notifyObservers(this);
 				}
 		};
 			
@@ -438,8 +444,8 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 						int y = locationY;
 						field[x-1][y].setResourceType(8);	
 					}
-					setChanged();
-					notifyObservers(this);
+					//setChanged();
+					//notifyObservers(this);
 				}
 			
 		};
