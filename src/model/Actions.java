@@ -34,7 +34,7 @@ public class Actions {
 		return updatedField;
 	}
 		
-	public String gatherResources(Agent agent, Resources resource) {
+	public String gatherResources(Agent agent, int resource) {
 		int closestDistance = 0;
 		int min = Integer.MAX_VALUE;
 		DistanceFormula calculateDistance = new DistanceFormula();
@@ -48,7 +48,7 @@ public class Actions {
 		else {*/
 			for (int i = 0; i < 100; i++) {
 				for (int j = 0; j < 100; j++) {
-					if (field[i][j].getResourceType() == resource.getResourceType()) {
+					if (field[i][j].getResourceType() == resource) {
 						closestDistance = calculateDistance.distanceFormula(agent.getXLoc(), agent.getYLoc(), i, j);
 						if (closestDistance < min) {
 							min = closestDistance;
@@ -67,10 +67,10 @@ public class Actions {
 		//}
 			
 			//field[x][y].setResourceType(8, 0);
-			System.out.println(agent.getName() + " has gone to collect some " + resource.getName() + " agentX: " + agent.getXLoc() + " agentY: " + agent.getYLoc() + " Destx: " + dx + " DestY: " + dy);
+			System.out.println(agent.getName() + " has gone to collect some food"  + " agentX: " + agent.getXLoc() + " agentY: " + agent.getYLoc() + " Destx: " + dx + " DestY: " + dy);
 			ShortestPath path = new ShortestPath(agent.getXLoc(),agent.getYLoc(),dx,dy);
 			
-			return (agent.getName() + " has gone to collect some " + resource.getName() + " agentX: " + agent.getXLoc() + " agentY: " + agent.getYLoc() + " Destx: " + dx + " DestY: " + dy);
+			return (agent.getName() + " has gone to collect some food " +  " agentX: " + agent.getXLoc() + " agentY: " + agent.getYLoc() + " Destx: " + dx + " DestY: " + dy);
 
 	}
 	

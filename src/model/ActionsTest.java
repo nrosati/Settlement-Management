@@ -14,7 +14,7 @@ public class ActionsTest {
 		Agent agent1 = new Agent("Scrappy", 5, 5);
 		Resources food = new Resources("food", 60, 60, true);
 		Actions gather = new Actions(agent1, food);
-		System.out.println(gather.gatherResources(agent1, food));
+		System.out.println(gather.gatherResources(agent1, 3));
 	}
 
 }

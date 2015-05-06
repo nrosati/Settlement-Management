@@ -83,20 +83,11 @@ public class MapGenerator {
 			generateResources(3000, 3);//Generate 2000 food tiles
 			generateResources(2000, 4);//Generate 1000 gold tiles
 		}
-		//make a 25 X 25 starting space
+		
 		for(int i = 0; i < 25; i++){
 			for(int j = 0; j < 25; j++){
 				field[i][j].setResourceType(0);
 			}
-		}
-		//Surround the map by water to help with null pointers maybe?
-		for(int i = 0; i < 100; i ++){
-			field[i][0].setResourceType(2);
-			field[i][99].setResourceType(2);			
-		}
-		for(int j = 0; j < 100; j++){
-			field[0][j].setResourceType(2);
-			field[99][j].setResourceType(2);
 		}
 		return field;
 	}

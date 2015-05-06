@@ -6,11 +6,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-/**
- * Class that holds an array list of images to draw for the various map tiles
- * @author Nick
- *
- */
+
 
 public class Images {
 	private static ArrayList<BufferedImage> imagesList = new ArrayList<>();
@@ -89,41 +85,23 @@ public class Images {
 	public BufferedImage getAgentTile(){
 		return imagesList.get(5);
 	}
-	/**
-	 * returns the bufferedImage of the sand tile
-	 * @return
-	 */
+	
 	public BufferedImage getSand(){
 		return imagesList.get(6);
 	}
-	/**
-	 * returns the bufferedImage of the jungle tile
-	 * @return
-	 */
 	public BufferedImage getJungle(){
 		return imagesList.get(7);
 	}
-	/**
-	 * returns the bufferedImage of the snow
-	 * @return
-	 */
 	public BufferedImage getSnow(){
 		return imagesList.get(8);
 	}
-	/**
-	 * returns the bufferedImage of the storeHouse
-	 * @return
-	 */
 	public BufferedImage getStoreHouse(){
 		return imagesList.get(9);
 	}
-	/**
-	 * returns the bufferedImage of the barracks
-	 * @return
-	 */
 	public BufferedImage getBarracks(){
 		return imagesList.get(10);
 	}
+	
 	public BufferedImage getPhilosopher(){
 		return imagesList.get(11);
 	}

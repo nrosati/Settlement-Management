@@ -33,7 +33,12 @@ public class ShortestPath {
 		Dijkstra dijkstra = new Dijkstra(graph);
 
 		dijkstra.execute(nodes.get(finalSource));
-		path = dijkstra.getPath(nodes.get(finalDest-2));
+		if(dijkstra.getPath(nodes.get(finalDest-2)) != null)
+			path = dijkstra.getPath(nodes.get(finalDest-2));
+		else if(dijkstra.getPath(nodes.get(finalDest-1)) != null)
+			path = dijkstra.getPath(nodes.get(finalDest-1));
+		else
+			path = dijkstra.getPath(nodes.get(finalDest));
 
 		
 		Thread one = new Thread() {
@@ -56,65 +61,32 @@ public class ShortestPath {
 		        i = Integer.parseInt(str[1]);
 		        j = Integer.parseInt(str[2]);
 		        
-		        //int temp = field[i][j].getResourceType();
-		        //field[i][j].setResourceType();
-		        //walk();
 		        field[i][j].setAgent();
 		        
-		        if(field[i-1][j].getResourceType() == 7 /*&& field[i-1][j].getAgent() == field[i][j].getAgent()*/)
-		        	//temp = field[i-1][j].getResourceType();
+		        if(field[i-1][j].getResourceType() == 7)
 		        	field[i-1][j].setResourceType(0);
 		        
-		        if(field[i][j-1].getResourceType() == 7 /*&& field[i][j-1].getAgent() == field[i][j].getAgent()*/) 
-		        	//temp = field[i][j-1].getResourceType();
+		        if(field[i][j-1].getResourceType() == 7 ) 
 		        	field[i][j-1].setResourceType(0);
 		        
-		        if(field[i+1][j].getResourceType() == 7 /*&& field[i+1][j].getAgent() == field[i][j].getAgent()*/)
-		        	//temp = field[i+1][j].getResourceType();
+		        if(field[i+1][j].getResourceType() == 7)
 		        	field[i+1][j].setResourceType(0);
 		        
-		        if(field[i][j+1].getResourceType() == 7 /*&& field[i][j+1].getAgent() == field[i][j].getAgent()*/)
-		        	//temp = field[i][j+1].getResourceType();
+		        if(field[i][j+1].getResourceType() == 7)
 		        	field[i][j+1].setResourceType(0);
-
-		        
-		        //System.out.println(getPath().length);
-		        //walkPath[i][j].setResourceType(4);
-		        
-		       // System.out.println(walkPath[i][j]);
-		        
-		        //System.out.print(walkPath[i][j]);
-		     
 		        }
-		    //System.out.print(getPathInt());
 		    }
 		};
 		
 		
 		one.start();
-		
+
 
 	    }
-	    
-	   //for(int s = 0; s < str.length; s++) {
-	//	   System.out.println(str[s]);
-	   //}
-	    
-		//System.out.println(nodes.get(0));
-	//}
-	
-	/*public LinkedList<Vertex> getPath() {
-		for (Vertex vertex : path) {
-			return vertex;
-		}
-		return " ";
-
-	}*/
 
 	public void placeVertices() {
 		for (int i = 0; i < 100; i++) {
 			for (int j = 0; j < 100; j++) {
-				// int tile = field[i][j].getResourceType();
 				Vertex location = new Vertex("Location_" + i + "," + j,
 						"Location_" + i + "," + j);
 				nodes.add(location);
@@ -180,16 +152,9 @@ public class ShortestPath {
 		return arrayAt[i][j];
 	}
 	
-	/*public array getPath() {
-		
-	}*/
-	
+
 	public static void main(String[] args) {
 		ShortestPath path = new ShortestPath(5,5,20,20);
-		//System.out.println("Starting....");
-		//path.getPath();
-		//System.out.println("Finished!");
-		
 	}
 
 }
