@@ -8,6 +8,7 @@
  */
 package model;
 import java.awt.Image;
+import java.util.Observable;
 import java.util.Timer;
 /**
  * This class defines an Agent all if his needs and his actions.
@@ -15,7 +16,7 @@ import java.util.Timer;
  * His AI to find resources when his needs are low.  His ability to build
  * buildings etc.
  **/
-public class Agent {//Removed abstract for testing purposes
+public class Agent extends Observable{//Removed abstract for testing purposes
 	private String name;
 	// private List<Resources> resources;
 	protected int strength;
@@ -231,6 +232,8 @@ public class Agent {//Removed abstract for testing purposes
 		for(int i = this.health; i > 0; i--) {
 			Thread.sleep(100);
 			this.health--;
+			setChanged();
+			notifyObservers(this);
 			System.out.println("health: " + this.health);
 			if(this.health <= 5) {
 				System.out.println("Your health is getting low. Eat something!");

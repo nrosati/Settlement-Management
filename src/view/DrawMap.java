@@ -238,7 +238,7 @@ public class DrawMap extends JPanel implements Observer{
 		//img = map.getMapImage();
 		list.clear();
 		for(Agent agent: map.getAgents()){
-			String element = agent.getName();
+			String element = agent.getName() + " Health = " + agent.getHealth();
 			list.addElement(element);
 		}
 		repaint();
