@@ -40,8 +40,12 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 	protected boolean isGatherer;
 	protected boolean isWarrior;
 	protected boolean isPriest;
-	private boolean gathering;
+	private boolean gatheringFood;
+	private boolean gatheringWater;
+	private boolean gatheringWood;
+	private boolean gatheringGold;
 	private boolean walking;
+	private boolean depositing;
 	
 	private int foodCarry;
 	private int woodCarry;
@@ -213,102 +217,91 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 	 */
 
 	public void gatherResources(int resource) throws InterruptedException {
-		this.resource = resource;
-		int closestDistance = 0;
-		int min = Integer.MAX_VALUE;
-		
-		DistanceFormula calculateDistance = new DistanceFormula();
-		for (int i = 0; i < 100; i++) {
-			for (int j = 0; j < 100; j++) {
-				if (field[i][j].getResourceType() == resource) {
-					closestDistance = calculateDistance.distanceFormula(getXLoc(), getYLoc(), i, j);
-					if (closestDistance < min) {
-						min = closestDistance;
-						this.setDx(i);
-						this.setDy(j);
+		if(!this.depositing)
+		{
+			this.resource = resource;
+			int closestDistance = 0;
+			int min = Integer.MAX_VALUE;
+			
+			DistanceFormula calculateDistance = new DistanceFormula();
+			for (int i = 0; i < 100; i++) {
+				for (int j = 0; j < 100; j++) {
+					if (field[i][j].getResourceType() == resource) {
+						closestDistance = calculateDistance.distanceFormula(getXLoc(), getYLoc(), i, j);
+						if (closestDistance < min) {
+							min = closestDistance;
+							this.setDx(i);
+							this.setDy(j);
+						}
+
 					}
 
 				}
 
 			}
+			this.walking = true;
+			ShortestPath path = new ShortestPath(this, getXLoc(),getYLoc(),getDx(),getDy());
+			locationX = dx;
+			locationY = dy;
+			if(resource == 3) {
+				gatherFood();
+			}
+			if(resource == 1) {
+				gatherWood();
+			}
+			
+			if(resource == 2) {
+				gatherWater();
+			}
+			
+			if(resource == 4) {
+				gatherGold();
+			}
+			
+			//setAgent(locationX, locationY);
+		}
+		else return;
 
-		}
-		this.walking = true;
-		ShortestPath path = new ShortestPath(this, getXLoc(),getYLoc(),getDx(),getDy());
-		locationX = dx;
-		locationY = dy;
-		if(resource == 3) {
-			gatherFood();
-		}
-		if(resource == 1) {
-			gatherWood();
-		}
-		
-		if(resource == 2) {
-			gatherWater();
-		}
-		
-		if(resource == 4) {
-			gatherGold();
-		}
-		
-		//setAgent(locationX, locationY);
 	}
 	
 	public int gatherFood() throws InterruptedException {
 		this.busy = true;
-		Building deposit = new Building("Storage");
 		for(int i = 0; i <= 20; i++){
 			storage = i;
 			foodCarry++;	
 		}
-		while(!this.walking) {
-			System.out.println("continuing");
-			continue;
-		}
-		if(this.walking)
-			deposit.depositResources(this, 3, foodCarry); 
-		foodCarry = 0;
+		this.gatheringFood = true;
 		return foodCarry;
 	}
 	
 	
 	public int gatherWood() throws InterruptedException {
 		this.busy = true;
-		Building deposit = new Building("Storage");
-		for(int i = storage; storage <= 20; i++){
+		for(int i = 0; i <= 20; i++){
 			storage = i;
-			foodCarry++;	
+			woodCarry++;	
 		}
-		storage = 0;
-		if(!this.hungry)
-			deposit.depositResources(this, 1, woodCarry); 
-		return storage;
+		this.gatheringWood = true;
+		return woodCarry;
 	}
 	public int gatherWater() throws InterruptedException {
 		this.busy = true;
-		Building deposit = new Building("Storage");
-		for(int i = storage; storage <= 20; i++){
+		for(int i = 0; i <= 20; i++){
 			storage = i;
-			foodCarry++;	
+			waterCarry++;	
 		}
-		storage = 0;
-		if(!this.hungry)
-			deposit.depositResources(this, 2, waterCarry); 
-		return storage;
+		this.gatheringWater = true;
+		return waterCarry;
 	}
 	
 	public int gatherGold() throws InterruptedException {
 		this.busy = true;
-		Building deposit = new Building("Storage");
-		for(int i = storage; storage <= 20; i++){
+		for(int i = 0; i <= 20; i++){
 			storage = i;
-			foodCarry++;	
+			goldCarry++;	
 		}
-		storage = 0;
-		if(!this.hungry)
-			deposit.depositResources(this, 4, storage); 
-		return storage;
+		this.gatheringGold = true;
+		return goldCarry;
 	}
 	
 	/**
@@ -339,7 +332,6 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 					if(health <= 5) {
 						System.out.println("Your health is getting low. Eat something!");
 						hungry = true;
-						
 						}
 					
 					
@@ -629,5 +621,37 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 	
 	public void setAgentWalkingTrue() {
 		this.walking = true;
+	}
+	public boolean isGatheringFood() {
+		return this.gatheringFood;
+	}
+	public boolean isGatheringWood() {
+		return this.gatheringWood;
+	}
+	public boolean isGatheringWater() {
+		return this.gatheringWater;
+	}
+	public boolean isGatheringGold() {
+		return this.gatheringGold;
+	}
+	
+	public boolean isDepositing() {
+		return this.depositing;
+	}
+	
+	public void setGatheringFood(boolean bool) {
+		this.gatheringFood = bool;
+	}
+	public void setGatheringWood(boolean bool) {
+		this.gatheringWood = bool;
+	}
+	public void setGatheringWater(boolean bool) {
+	this.gatheringWater = bool;
+	}
+	public void setGatheringGold(boolean bool) {
+		this.gatheringGold = bool;
+	}
+	public void setDepositing(boolean bool) {
+		this.depositing = bool;
 	}
 }

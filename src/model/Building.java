@@ -109,7 +109,7 @@ public class Building {
 			if(resourceType == 1) {
 				woodCount += resourcesCount;
 				map.addWood(resourcesCount);
-				//agent.gatherResources(1);
+				agent.setDepositing(false);
 			}
 			else if (resourceType == 2) {
 				waterCount += resourcesCount;
@@ -121,11 +121,13 @@ public class Building {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				agent.setDepositing(false);
 			}
 			
 			else if(resourceT == 3){
 				foodCount += numResources;
 				map.addFood(numResources);
+				agent.setDepositing(false);
 			}
 			else if(resourceType ==4) {
 				goldCount += resourcesCount;
@@ -137,58 +139,8 @@ public class Building {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				agent.setDepositing(false);
 			}
-		
-		/*Thread thread = new Thread() {
-			public void run() {
-				if(resourceType == 1) {
-					woodCount += resourcesCount;
-					map.addWood(resourcesCount);
-					try {
-						Thread.sleep(1000);
-						agent.gatherResources(1);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else if (resourceType == 2) {
-					waterCount += resourcesCount;
-					map.addWater(resourcesCount);
-					try {
-						Thread.sleep(1000);
-						agent.gatherResources(2);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else if(resourceType == 3){
-					foodCount += resourcesCount;
-					map.addFood(resourcesCount);
-					try {
-						Thread.sleep(1000);
-						agent.gatherResources(3);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else if(resourceType ==4) {
-					goldCount += resourcesCount;
-					map.addGold(resourcesCount);
-					try {
-						Thread.sleep(1000);
-						agent.gatherResources(4);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		};
-		
-		thread.run();*/
 		
 
 	}

@@ -66,7 +66,7 @@ public class ShortestPath {
 					e.printStackTrace();
 				}
 
-		        System.out.println(vertex);
+		       // System.out.println(vertex);
 		        String tempString = vertex.toString();
 		        str = tempString.split("[^\\d]+");
 		        if(field[lastX][lastY] != null){
@@ -107,6 +107,62 @@ public class ShortestPath {
 		        
 		        }
 	        agent.setAgentWalkingFalse();
+	        if(agent.isGatheringFood()) {
+	    		Building deposit = new Building("Storage");
+				try {
+					if(!agent.isDepositing()) {
+						deposit.depositResources(agent, 3, agent.getFoodCount());
+						agent.setDepositing(true);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				agent.setGatheringFood(false);
+
+	        }
+	        if(agent.isGatheringWood()) {
+	    		Building deposit = new Building("Storage");
+				try {
+					if(!agent.isDepositing()) {
+						deposit.depositResources(agent, 1, agent.getWoodCount());
+						agent.setDepositing(true);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				agent.setGatheringWood(false);
+
+	        }
+	        if(agent.isGatheringWater()) {
+	    		Building deposit = new Building("Storage");
+				try {
+					if(!agent.isDepositing()) {
+						deposit.depositResources(agent, 2, agent.getWaterCount());
+						agent.setDepositing(true);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				agent.setGatheringWater(false);
+
+	        }
+	        if(agent.isGatheringGold()) {
+	    		Building deposit = new Building("Storage");
+				try {
+					if(!agent.isDepositing()) {
+						deposit.depositResources(agent, 4, agent.getGoldCount());
+						agent.setDepositing(true);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				agent.setGatheringGold(false);
+
+	        }
 		    }
 		};
 		
