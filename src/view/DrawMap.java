@@ -259,7 +259,7 @@ public class DrawMap extends JPanel implements Observer{
 	}
 	/**
 	 * Observable update method.  Updates the list of agents
-	 * and the map image.
+	 * the map image, the resource lists, and the win/loose conditions.
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
@@ -288,6 +288,34 @@ public class DrawMap extends JPanel implements Observer{
 		wrapper.setViewportView(new JViewport().add(panel));
 		System.out.println("Tile was changed");
 		
+		for(Agent agent: map.getAgents()){
+			boolean lost = true;
+			if(agent.isPhilosopher())lost = false;
+			if(lost == false){
+				JFrame lostFrame = new JFrame();
+				JLabel lostLabel = new JLabel();
+				lostLabel.setText("All of your agents are dead, Sorry you lost!");
+				lostLabel.setVisible(true);
+				lostFrame.add(lostLabel);
+				lostFrame.pack();
+				lostFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				lostFrame.setVisible(true);
+				System.out.println("Sorry you lost");
+			}
+			
+		}
+		
+		if(map.getWorldGold() >= 100){
+			JFrame winFrame = new JFrame();
+			JLabel winLabel = new JLabel();
+			winLabel.setText("Congratulations you won!");
+			winLabel.setVisible(true);
+			winFrame.add(winLabel);
+			winFrame.pack();
+			winFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			winFrame.setVisible(true);
+			System.out.println("Congratulations you won!");
+		}
 	}
 
 }

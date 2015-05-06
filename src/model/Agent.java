@@ -93,7 +93,7 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 		this.isGatherer = false;
 		this.isWarrior = false;
 		this.isPriest = false;
-		
+		isPhilosopher = false;
 		this.walking  = false;
 		try {
 			this.slowlyDie();
@@ -327,7 +327,7 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 
 			public void run() {
 				
-				for(int i = health; i > health; i--) {
+				for(int i = health; i > 0; i--) {
 					try {
 						Thread.sleep(5000);
 					} catch (InterruptedException e) {
@@ -339,6 +339,7 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 					if(health <= 5) {
 						System.out.println("Your health is getting low. Eat something!");
 						hungry = true;
+						
 						}
 					
 					
@@ -454,7 +455,7 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 
 	}
 	
-	private boolean isPhilosopher() {
+	public boolean isPhilosopher() {
 		return this.isPhilosopher;
 	}
 
