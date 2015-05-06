@@ -89,6 +89,14 @@ public class MapGenerator {
 				field[i][j].setResourceType(0);
 			}
 		}
+		for(int i = 0; i < 100; i++){
+			field[i][0].setResourceType(2);
+			field[i][99].setResourceType(2);
+		}
+		for(int j = 0; j < 100; j++){
+			field[0][j].setResourceType(2);
+			field[99][j].setResourceType(2);
+		}
 		return field;
 	}
 	/**
