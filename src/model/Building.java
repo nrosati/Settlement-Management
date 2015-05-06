@@ -6,12 +6,20 @@ public class Building {
 	private Image buildingImage;
 	private boolean dense;
 	private Tile [][] size;
+	private static  Map map = Map.getMap(); 
+	private static Tile[][] field = map.getField();
 	private int goldCount;
 	private int foodCount;
 	private int woodCount;
+	private int waterCount;
+	private int resourceType;
+	private int resourcesCount;
+	private Agent agent;
 	private String buildingType;
 	
 	private int cost;
+	private int dx;
+	private int dy;
 	/**
 	 * Builds a building based on the passed name
 	 * @param building
@@ -21,6 +29,7 @@ public class Building {
 		this.size = size;           //formatted incorrectly for now jsut to get something started
 		this.dense = dense;
 		buildingType = building;
+		waterCount = 0;
 		goldCount = 0;
 		foodCount = 0;
 		woodCount = 0;
@@ -68,17 +77,122 @@ public class Building {
 	 * Allows an agent to deposit resources adding them to
 	 * this buildings resource count
 	 * @param numResources
+	 * @throws InterruptedException 
 	 */
 	/*
 	 * This should take an int representing what kind of resource is being deposited.
 	 * Then the second int is the number of resources being deposited.
 	 * It should then increase the corresponding resource count.
 	 */
-	public void depositResources(int resourceType, int numResources){
-		if(resourceType == 1) woodCount += numResources;
-		else if(resourceType == 3) foodCount += numResources;
-		else if(resourceType ==4) goldCount += numResources;
+	public void depositResources(Agent agent1, int resourceT, int numResources) throws InterruptedException{
+		int closestDistance = 0;
+		int min = Integer.MAX_VALUE;
+		DistanceFormula calculateDistance = new DistanceFormula();
+		for (int i = 0; i < 100; i++) {
+			for (int j = 0; j < 100; j++) {
+				if (field[i][j].getResourceType() == 5) {
+					closestDistance = calculateDistance.distanceFormula(agent1.getXLoc(), agent1.getYLoc(), i, j);
+					if (closestDistance < min) {
+						min = closestDistance;
+						dx = i;
+						dy = j;
+					}
+
+				}
+
+			}
+
+		}
+		ShortestPath path = new ShortestPath(agent1, agent1.getXLoc(),agent1.getYLoc(),dx,dy);
+		
+		
+			if(resourceType == 1) {
+				woodCount += resourcesCount;
+				map.addWood(resourcesCount);
+				//agent.gatherResources(1);
+			}
+			else if (resourceType == 2) {
+				waterCount += resourcesCount;
+				map.addWater(resourcesCount);
+				try {
+					Thread.sleep(1000);
+					//agent.gatherResources(2);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			else if(resourceT == 3){
+				foodCount += numResources;
+				map.addFood(numResources);
+			}
+			else if(resourceType ==4) {
+				goldCount += resourcesCount;
+				map.addGold(resourcesCount);
+				try {
+					Thread.sleep(1000);
+					//agent.gatherResources(4);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		
+		/*Thread thread = new Thread() {
+			public void run() {
+				if(resourceType == 1) {
+					woodCount += resourcesCount;
+					map.addWood(resourcesCount);
+					try {
+						Thread.sleep(1000);
+						agent.gatherResources(1);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else if (resourceType == 2) {
+					waterCount += resourcesCount;
+					map.addWater(resourcesCount);
+					try {
+						Thread.sleep(1000);
+						agent.gatherResources(2);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else if(resourceType == 3){
+					foodCount += resourcesCount;
+					map.addFood(resourcesCount);
+					try {
+						Thread.sleep(1000);
+						agent.gatherResources(3);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else if(resourceType ==4) {
+					goldCount += resourcesCount;
+					map.addGold(resourcesCount);
+					try {
+						Thread.sleep(1000);
+						agent.gatherResources(4);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		
+		thread.run();*/
+		
+
 	}
+	
 	/**
 	 * Returns the current number of resources stored in this building
 	 * @return

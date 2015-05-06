@@ -85,45 +85,23 @@ public class Images {
 	public BufferedImage getAgentTile(){
 		return imagesList.get(5);
 	}
-	/**
-	 * Returns Sand Image
-	 * @return
-	 */
+	
 	public BufferedImage getSand(){
 		return imagesList.get(6);
 	}
-	/**
-	 * Returns jungle Image
-	 * @return
-	 */
 	public BufferedImage getJungle(){
 		return imagesList.get(7);
 	}
-	/**
-	 * Returns snow tile
-	 * @return
-	 */
 	public BufferedImage getSnow(){
 		return imagesList.get(8);
 	}
-	/**
-	 * Returns store house image
-	 * @return
-	 */
 	public BufferedImage getStoreHouse(){
 		return imagesList.get(9);
 	}
-	/**
-	 * Returns barracks image
-	 * @return
-	 */
 	public BufferedImage getBarracks(){
 		return imagesList.get(10);
 	}
-	/**
-	 * Returns philosopher image
-	 * @return
-	 */
+	
 	public BufferedImage getPhilosopher(){
 		return imagesList.get(11);
 	}

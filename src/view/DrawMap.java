@@ -19,7 +19,7 @@ public class DrawMap extends JPanel implements Observer{
 	private JPanel panel, controlPanel, buttons;
 	private JList<String> agentList;
 	private DefaultListModel<String> list;
-	private JButton addAgent, buildStoreHouse, buildBarracks, gatherFood, gatherGold, gatherWood, water;
+	private JButton addAgent, buildStoreHouse, buildBarracks, gatherFood, gatherGold, gatherWood, water, depositResources;
 	/**
 	 * Initializes the various components of the map
 	 */
@@ -104,6 +104,8 @@ public class DrawMap extends JPanel implements Observer{
 		water = new JButton();
 		water.setText("Gather Water");
 		water.setVisible(true);
+		depositResources = new JButton("Deposit Resources");
+		depositResources.setVisible(true);
 		buttons = new JPanel();
 		buttons.add(addAgent);
 		buttons.add(buildStoreHouse);
@@ -112,6 +114,7 @@ public class DrawMap extends JPanel implements Observer{
 		buttons.add(gatherWood);
 		buttons.add(gatherFood);
 		buttons.add(water);
+		buttons.add(depositResources);
 	}
 	/**
 	 * Returns the listeners to the buttons
@@ -125,6 +128,7 @@ public class DrawMap extends JPanel implements Observer{
 		gatherFood.addActionListener(gl);
 		gatherGold.addActionListener(gl);
 		water.addActionListener(gl);
+		depositResources.addActionListener(gl);
 	}
 	/**
 	 * Creates the action listeners.  Mainly adds an agent
@@ -193,6 +197,17 @@ public class DrawMap extends JPanel implements Observer{
 					e1.printStackTrace();
 				}
 			}
+			if(e.getSource() == depositResources){
+				int select = agentList.getSelectedIndex();
+				Building building = new Building("test");
+				Agent agent = map.getAgents().get(select);
+				try {
+					agent.depositResources(3, building);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 		}
 		
 	}
@@ -240,6 +255,14 @@ public class DrawMap extends JPanel implements Observer{
 		for(Agent agent: map.getAgents()){
 			String element = agent.getName() + " Health = " + agent.getHealth();
 			list.addElement(element);
+			try {
+				agent.slowlyDie();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//agent.slo
+			agent.addObserver(this);
 		}
 		repaint();
 		wrapper.setViewportView(new JViewport().add(panel));

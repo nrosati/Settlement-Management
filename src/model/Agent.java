@@ -10,21 +10,18 @@ package model;
 import java.awt.Image;
 import java.util.Observable;
 import java.util.Timer;
-/**
- * This class defines an Agent all if his needs and his actions.
- * 
- * His AI to find resources when his needs are low.  His ability to build
- * buildings etc.
- **/
+
 public class Agent extends Observable{//Removed abstract for testing purposes
 	private String name;
 	// private List<Resources> resources;
 	protected int strength;
 	protected int storage;
 	protected int health;
+	protected int thirst;
+	protected int gold;
 	protected int faith;
-	private Map map;
-	private Tile[][] field;
+	private static  Map map = Map.getMap(); 
+	private static Tile[][] field = map.getField();
 	protected int capacity;
 
 	private int locationX;
@@ -33,6 +30,9 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 	private boolean dense;
 	private boolean busy;
 	private boolean hungry;
+	private boolean thirsty;
+	private boolean paidTax;
+
 	private boolean selected;
 	
 	private boolean isPhilosopher;
@@ -40,6 +40,13 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 	protected boolean isGatherer;
 	protected boolean isWarrior;
 	protected boolean isPriest;
+	private boolean gathering;
+	private boolean walking;
+	
+	private int foodCarry;
+	private int woodCarry;
+	private int goldCarry;
+	private int waterCarry;
 
 	private int resource; // the current resource that the agent i
 								// carrying. null if none.
@@ -86,6 +93,8 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 		this.isGatherer = false;
 		this.isWarrior = false;
 		this.isPriest = false;
+		
+		this.walking  = false;
 	}
 
 
@@ -104,18 +113,18 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 	public Integer getHealth() {
 		return this.health;
 	}
-	/*
+
 	public Integer getStrength() {
 		return this.strength;
-	}*/
+	}
 
 	public Integer getStorage() {
 		return this.storage;
 	}
-	/*
+
 	public Integer getFaith() {
 		return this.faith;
-	}*/
+	}
 
 	
 	/**
@@ -141,11 +150,7 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 	public int getYLoc() {
 		return this.locationY;
 	}
-	/**
-	 * Returns the boolean regarding the Agents ability to
-	 * perform an action
-	 * @return
-	 */
+
 	public boolean isBusy() {
 		return this.busy;
 	}
@@ -166,10 +171,9 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 		return this.dense;
 	}
 
-	/**
-	 * Returns the current resource the Agent is using
-	 * @return
-	 */
+	public boolean isSelected() {
+		return this.selected;
+	}
 	
 	public int getResource() {
 		return this.resource;
@@ -191,12 +195,22 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 	 * @return
 	 * @throws InterruptedException
 	 */
-	
+	/*
+	 * Heres what needs to happen in this method.
+	 * It needs to take an int, indicating what kind of resource to find.
+	 * It needs to find the nearest one and move to it.
+	 * When it gets there increase the storage count of the agent by 1.
+	 * I think they should have a count for each resource would be easier.
+	 * Then make sure you take the tile(field[i][j] and use setResourceType(0)
+	 * to set it to 0, this will change it to a default terrain tile and 
+	 * update the map.
+	 */
 
-	public int gatherResources(int resource) throws InterruptedException {
+	public void gatherResources(int resource) throws InterruptedException {
 		this.resource = resource;
 		int closestDistance = 0;
 		int min = Integer.MAX_VALUE;
+		
 		DistanceFormula calculateDistance = new DistanceFormula();
 		for (int i = 0; i < 100; i++) {
 			for (int j = 0; j < 100; j++) {
@@ -204,8 +218,8 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 					closestDistance = calculateDistance.distanceFormula(getXLoc(), getYLoc(), i, j);
 					if (closestDistance < min) {
 						min = closestDistance;
-						this.setDx(i);// These may need to be switched around
-						this.setDy(j);// These may need to be switched around
+						this.setDx(i);
+						this.setDy(j);
 					}
 
 				}
@@ -213,11 +227,82 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 			}
 
 		}
-		ShortestPath path = new ShortestPath(getXLoc(),getYLoc(),getDx(),getDy());
+		this.walking = true;
+		ShortestPath path = new ShortestPath(this, getXLoc(),getYLoc(),getDx(),getDy());
 		locationX = dx;
 		locationY = dy;
-		setAgent(locationX, locationY);
-		return this.storage;
+		if(resource == 3) {
+			gatherFood();
+		}
+		if(resource == 1) {
+			gatherWood();
+		}
+		
+		if(resource == 2) {
+			gatherWater();
+		}
+		
+		if(resource == 4) {
+			gatherGold();
+		}
+		
+		//setAgent(locationX, locationY);
+	}
+	
+	public int gatherFood() throws InterruptedException {
+		this.busy = true;
+		Building deposit = new Building("Storage");
+		for(int i = 0; i <= 20; i++){
+			storage = i;
+			foodCarry++;	
+		}
+		while(!this.walking) {
+			System.out.println("continuing");
+			continue;
+		}
+		if(this.walking)
+			deposit.depositResources(this, 3, foodCarry); 
+		foodCarry = 0;
+		return foodCarry;
+	}
+	
+	
+	public int gatherWood() throws InterruptedException {
+		this.busy = true;
+		Building deposit = new Building("Storage");
+		for(int i = storage; storage <= 20; i++){
+			storage = i;
+			foodCarry++;	
+		}
+		storage = 0;
+		if(!this.hungry)
+			deposit.depositResources(this, 1, woodCarry); 
+		return storage;
+	}
+	public int gatherWater() throws InterruptedException {
+		this.busy = true;
+		Building deposit = new Building("Storage");
+		for(int i = storage; storage <= 20; i++){
+			storage = i;
+			foodCarry++;	
+		}
+		storage = 0;
+		if(!this.hungry)
+			deposit.depositResources(this, 2, waterCarry); 
+		return storage;
+	}
+	
+	public int gatherGold() throws InterruptedException {
+		this.busy = true;
+		Building deposit = new Building("Storage");
+		for(int i = storage; storage <= 20; i++){
+			storage = i;
+			foodCarry++;	
+		}
+		storage = 0;
+		if(!this.hungry)
+			deposit.depositResources(this, 4, storage); 
+		return storage;
 	}
 	
 	/**
@@ -229,46 +314,145 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 	
 	public void slowlyDie() throws InterruptedException {
 		
-		for(int i = this.health; i > 0; i--) {
-			Thread.sleep(100);
-			this.health--;
-			setChanged();
-			notifyObservers(this);
-			System.out.println("health: " + this.health);
-			if(this.health <= 5) {
-				System.out.println("Your health is getting low. Eat something!");
-				this.hungry = true;
-				//Walk Towards Either Building that stores food to eat or to nearest food resource
-				if(this.storage > 0) {
-					System.out.println("Agent stops work to eat.");
-					System.out.println("Eating...");
-					this.health += this.storage;
-					if(this.health >= 20) {
-						int remainder = (this.health-this.storage);
-						this.health = 20;
-						this.storage = remainder;
-						i=(this.health+1);
-					}
-					else {
-						this.storage = 0;
-						i=(this.health+1);
-					}
-					
-				}
-				
-			}
-			
-			if(this.health == 0) {
-				System.out.println("Due to a lack of energy, " + this.name + " has sat down and dedicated his life to philosophy");
-				this.hungry = false;
-				this.isPhilosopher = true;
-				field[locationX][locationY].setResourceType(8);
-			}
+		//setChanged();
+		//notifyObservers(this);
+		
+		Thread die = new Thread() {
 
-		}
+			public void run() {
+				
+				for(int i = health; i > health; i--) {
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					health--;
+					//System.out.println(name + "'s health: " + health);
+					if(health <= 5) {
+						System.out.println("Your health is getting low. Eat something!");
+						hungry = true;
+						}
+					
+					
+					if(health <= 0) {
+						
+						System.out.println("Due to a lack of energy, " + name + " has sat down and dedicated his life to philosophy");
+						hungry = false;
+						isPhilosopher = true;
+						//Need to set the resource type of the tile to 8
+						int x = locationX;
+						int y = locationY;
+						field[x][y].setResourceType(8);	
+						break;
+					}
+
+				}
+				setChanged();
+				notifyObservers(this);
+			}
+		};
+			
+		die.start();
 	}
 	
+	public void slowlyDehydrate() throws InterruptedException {
+		
+		//setChanged();
+		//notifyObservers(this);
+		
+		Thread dehydrate = new Thread() {
+
+			public void run() {
+				
+				for(int i = thirst; i > 0; i--) {
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					thirst--;
+					//System.out.println(name + "'s health: " + health);
+					if(thirst <= 5) {
+						System.out.println("You are dehydrated! Drink water!");
+						thirsty = true;
+						//Walk Towards Either Building that stores food to eat or to nearest food resource
+							
+						}
+					}
+					
+					if(thirst <= 0) {
+						
+						System.out.println("Due to dehydration, " + name + " has sat down and dedicated his life to philosophy");
+						thirsty = false;
+						isPhilosopher = true;
+						//Need to set the resource type of the tile to 8
+						int x = locationX;
+						int y = locationY;
+						field[x-1][y].setResourceType(8);	
+					}
+					setChanged();
+					notifyObservers(this);
+				}
+		};
+			
+		dehydrate.start();
+
+	}
 	
+	public void payTax() throws InterruptedException {
+		
+		//setChanged();
+		//notifyObservers(this);
+		
+		Thread payTax = new Thread() {
+
+			public void run() {
+				
+				for(int i = gold; i > 0; i--) {
+					try {
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					gold--;
+					//System.out.println(name + "'s health: " + health);
+					if(thirst <= 5) {
+						System.out.println("You are dehydrated! Drink water!");
+						paidTax = true;
+						//Walk Towards Either Building that stores food to eat or to nearest food resource
+							
+						}
+					}
+					
+					if(gold <= 0) {
+						
+						System.out.println("Due to dehydration, " + name + " has sat down and dedicated his life to philosophy");
+						paidTax = false;
+						isPhilosopher = true;
+						//Need to set the resource type of the tile to 8
+						int x = locationX;
+						int y = locationY;
+						field[x-1][y].setResourceType(8);	
+					}
+					setChanged();
+					notifyObservers(this);
+				}
+			
+		};
+			
+		payTax.start();
+
+	}
+	
+	private boolean isPhilosopher() {
+		return this.isPhilosopher;
+	}
+
+
 	/*This should take a building, whichever building they are close to
 	 * you should get the count for that resource you are depositing and add the 
 	 * agents current storage of that resource type to the buildings corresponding storage.
@@ -281,25 +465,60 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 	 * @param resourceType
 	 * @param building
 	 * @return
+	 * @throws InterruptedException 
 	 */
-	public boolean depositResources(int resourceType, Building building) { 
+	public boolean depositResources(int resourceType, Building building) throws InterruptedException {
+		int closestDistance = 0;
+		int min = Integer.MAX_VALUE;
+		DistanceFormula calculateDistance = new DistanceFormula();
+		for (int i = 0; i < 100; i++) {
+			for (int j = 0; j < 100; j++) {
+				if (field[i][j].getResourceType() == 5) {
+					closestDistance = calculateDistance.distanceFormula(getXLoc(), getYLoc(), i, j);
+					if (closestDistance < min) {
+						min = closestDistance;
+						dx = i;
+						dy = j;
+					}
+
+				}
+
+			}
+
+		}
+		ShortestPath path = new ShortestPath(this, getXLoc(),getYLoc(),dx,dy);
 		boolean deposited = false;
 		if(resourceType == 1){
-			building.depositResources(1, woodCount);
+			locationX = dx;
+			locationY = dy;
+			building.depositResources(this, 1, woodCarry);
 			deposited = true;
 			woodCount = 0;
 		}
-		else if(resourceType == 3){
-			building.depositResources(3, foodCount);
+		if(resourceType == 2) {
+			locationX = dx;
+			locationY = dy;
+			building.depositResources(this, 2, waterCarry);
+			deposited = true;
+			waterCarry = 0;
+		}
+		if(resourceType == 3){
+			locationX = dx;
+			locationY = dy;
+			building.depositResources(this, 3, foodCarry);
 			deposited = true;
 			foodCount = 0;
 		}
-		else if(resourceType == 4){
-			building.depositResources(4, goldCount);
+		if(resourceType == 4){
+			locationX = dx;
+			locationY = dy;
+			building.depositResources(this, 4, goldCarry);
 			deposited = true;
 			goldCount = 0;
 		}
-//
+		
+
+		//field[dx][dy].setResourceType(5);
 		
 		return deposited;
 	}
@@ -325,14 +544,14 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 			if(name.equals("Barracks"))build = 6;
 			if(field[x][y].getPassable() && field[x+1][y].getPassable() 
 					&& field[x][y+1].getPassable() && field[x+1][y+1].getPassable()){
-				field[x][y].makeImpassable();
-				field[x][y].setResourceType(build);
 				field[x+1][y].makeImpassable();
 				field[x+1][y].setResourceType(build);
-				field[x][y+1].makeImpassable();
-				field[x][y+1].setResourceType(build);
+				field[x+2][y].makeImpassable();
+				field[x+2][y].setResourceType(build);
 				field[x+1][y+1].makeImpassable();
 				field[x+1][y+1].setResourceType(build);
+				field[x+2][y+1].makeImpassable();
+				field[x+2][y+1].setResourceType(build);
 				this.storage = this.storage - building.getCost();
 				map.addBuilding(building);
 				built = true;
@@ -341,34 +560,67 @@ public class Agent extends Observable{//Removed abstract for testing purposes
 		return building;
 		//
 	}
-	/**
-	 * Returns Y destination of Agent 
-	 * @return
-	 */
+	
 	public int getDy() {
 		return dy;
 	}
-	/**
-	 * Sets y destination of an Agent
-	 * @param dy
-	 */
+
 	public void setDy(int dy) {
 		this.dy = dy;
 	}
-	/**
-	 * Gets destination x coordinate of Agent
-	 * @return
-	 */
+
 	public int getDx() {
 		return dx;
 	}
-	/**
-	 * Sets Y destination of Agent
-	 * @param dx
-	 */
+
 	public void setDx(int dx) {
 		this.dx = dx;
 	}
 
-
+	public void eat() {
+		if(this.foodCarry != 0) {
+			health += foodCarry;
+			foodCarry = 0;
+		}
+		else
+			return;
+	}
+	
+	public void drink() {
+		if(this.waterCarry != 0) {
+			thirst += waterCarry;
+		}
+		else
+			return;
+	}
+	
+	public void payTaxes() {
+		if(this.goldCarry != 0) {
+			gold += goldCarry;
+		}
+		else
+			return;
+	}
+	
+	public int getFoodCount() {
+		return this.foodCarry;
+	}
+	
+	public int getGoldCount() {
+		return this.goldCarry;
+	}
+	public int getWoodCount() {
+		return this.woodCarry;
+	}
+	public int getWaterCount() {
+		return this.waterCarry;
+	}
+	
+	public void setAgentWalkingFalse() {
+		this.walking = false;
+	}
+	
+	public void setAgentWalkingTrue() {
+		this.walking = true;
+	}
 }

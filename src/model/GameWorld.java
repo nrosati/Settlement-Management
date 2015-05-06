@@ -43,7 +43,7 @@ public class GameWorld {
 
 		System.out.println();
 		
-		Building building = agent.buildBuilding(agent.getStorage(), 1, 1);
+		Building building = agent.buildBuilding("test", 1, 1);
 		for(int i = 0; i < 100; i++){
 			for(int j = 0; j < 100; j++){
 				System.out.print(field[i][j].getResourceType() + " ");
@@ -58,7 +58,7 @@ public class GameWorld {
 		//informs that resource is being deposited
 		System.out.println("Depositing...........");
 		agent.depositResources(storage, building);
-		int worldStorage = building.getStorage();
+		int worldStorage = 0;
 		System.out.println("Total world storage: " + worldStorage);
 		storage = agent.getStorage();
 		
@@ -68,8 +68,7 @@ public class GameWorld {
 		System.out.println();
 		
 		System.out.println("Agent will then collect food.");
-		ResourcesFood food = null;
-		agent.gatherResources(food);
+		agent.gatherResources(3);
 		
 		agent.getStorage();
 		

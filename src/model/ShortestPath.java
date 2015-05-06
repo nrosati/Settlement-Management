@@ -18,11 +18,17 @@ public class ShortestPath {
 	private static  Map map = Map.getMap(); 
 	private static Tile[][] field = map.getField();
 	private static Tile[][] walkPath;
+	private int lastX;
+	private int lastY;
+	private int firstX;
+	private int firstY;
+	private Agent agent;
 
 
 	LinkedList<Vertex> path;
 
-	public ShortestPath(int sourceX, int sourceY, int destX, int destY) {
+	public ShortestPath(Agent agent1, int sourceX, int sourceY, int destX, int destY) {
+		this.agent = agent1;
 		placeVertices();
 		placeEdges(sourceX, sourceY, destX, destY);
 
@@ -39,12 +45,17 @@ public class ShortestPath {
 			path = dijkstra.getPath(nodes.get(finalDest-1));
 		else
 			path = dijkstra.getPath(nodes.get(finalDest));
-
+		
+		lastX = sourceX;
+		lastY = sourceY;
+		firstX = sourceX;
+		firstY = sourceY;
 		
 		Thread one = new Thread() {
 		    public void run() {
 			int i;
 			int j;
+			int lastResource = 3;
 			String[] str = new String[1000];
 		    for (Vertex vertex : path) {
 		    	
@@ -58,12 +69,22 @@ public class ShortestPath {
 		        System.out.println(vertex);
 		        String tempString = vertex.toString();
 		        str = tempString.split("[^\\d]+");
+		        if(field[lastX][lastY] != null){
+		        	lastResource = field[lastX][lastY].getResourceType();
+		        }
+		        
 		        i = Integer.parseInt(str[1]);
 		        j = Integer.parseInt(str[2]);
 		        
+		        if(field[i][j].getResourceType()==3) {
+		        	
+		        }
+		        
 		        field[i][j].setAgent();
 		        
-		        if(field[i-1][j].getResourceType() == 7)
+		        
+		        
+		       /* if(field[i-1][j].getResourceType() == 7)
 		        	field[i-1][j].setResourceType(0);
 		        
 		        if(field[i][j-1].getResourceType() == 7 ) 
@@ -73,10 +94,23 @@ public class ShortestPath {
 		        	field[i+1][j].setResourceType(0);
 		        
 		        if(field[i][j+1].getResourceType() == 7)
-		        	field[i][j+1].setResourceType(0);
+		        	field[i][j+1].setResourceType(0);*/
+		        
+		        if(field[lastX][lastY] != null && 
+		        		 field[lastX][lastY].getResourceType() != 5 )
+		        	field[lastX][lastY].setResourceType(0);
+		        if(field[lastX][lastY].getResourceType() == 5)
+		        	field[lastX][lastY].setResourceType(5);
+		        lastX = i;
+		        lastY = j;
+
+		        
 		        }
+	        agent.setAgentWalkingFalse();
 		    }
 		};
+		
+		
 		
 		
 		one.start();
@@ -154,7 +188,7 @@ public class ShortestPath {
 	
 
 	public static void main(String[] args) {
-		ShortestPath path = new ShortestPath(5,5,20,20);
+		//ShortestPath path = new ShortestPath(5,5,20,20);
 	}
 
 }

@@ -11,6 +11,9 @@ public class Map {
 	private ArrayList<Agent> agents;
 	private ArrayList<Building> buildings;
 	private int foodCount;
+	private int woodCount;
+	private int waterCount;
+	private int goldCount;
 	private int biomeType;
 	private boolean occupied;
 	private MapGenerator mapGen;
@@ -159,7 +162,37 @@ public class Map {
 	}
 	
 	
+	public void addWood(int wood){
+		this.woodCount += wood;
+	}
+	
+	public void addWater(int water) {
+		this.waterCount += water;
+	}
+	
+	public void addFood(int food) {
+		this.foodCount += food;
+	}
+	
+	public void addGold(int gold) {
+		this.goldCount += gold;
+	}
+	
+	public int getWorldWood() {
+		return this.woodCount;
+	}
+	
+	public int getWorldFood() {
+		return this.foodCount;
+	}
+	
+	public int getWorldWater() {
+		return this.waterCount;
+	}
 
+	public int getWorldGold() {
+		return this.goldCount;
+	}
 	
 	
 	
