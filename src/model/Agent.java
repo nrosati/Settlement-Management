@@ -9,7 +9,12 @@
 package model;
 import java.awt.Image;
 import java.util.Timer;
-
+/**
+ * This class defines an Agent all if his needs and his actions.
+ * 
+ * His AI to find resources when his needs are low.  His ability to build
+ * buildings etc.
+ **/
 public class Agent {//Removed abstract for testing purposes
 	private String name;
 	// private List<Resources> resources;
@@ -98,18 +103,18 @@ public class Agent {//Removed abstract for testing purposes
 	public Integer getHealth() {
 		return this.health;
 	}
-
+	/*
 	public Integer getStrength() {
 		return this.strength;
-	}
+	}*/
 
 	public Integer getStorage() {
 		return this.storage;
 	}
-
+	/*
 	public Integer getFaith() {
 		return this.faith;
-	}
+	}*/
 
 	
 	/**
@@ -135,7 +140,11 @@ public class Agent {//Removed abstract for testing purposes
 	public int getYLoc() {
 		return this.locationY;
 	}
-
+	/**
+	 * Returns the boolean regarding the Agents ability to
+	 * perform an action
+	 * @return
+	 */
 	public boolean isBusy() {
 		return this.busy;
 	}
@@ -156,9 +165,10 @@ public class Agent {//Removed abstract for testing purposes
 		return this.dense;
 	}
 
-	public boolean isSelected() {
-		return this.selected;
-	}
+	/**
+	 * Returns the current resource the Agent is using
+	 * @return
+	 */
 	
 	public int getResource() {
 		return this.resource;
@@ -180,16 +190,7 @@ public class Agent {//Removed abstract for testing purposes
 	 * @return
 	 * @throws InterruptedException
 	 */
-	/*
-	 * Heres what needs to happen in this method.
-	 * It needs to take an int, indicating what kind of resource to find.
-	 * It needs to find the nearest one and move to it.
-	 * When it gets there increase the storage count of the agent by 1.
-	 * I think they should have a count for each resource would be easier.
-	 * Then make sure you take the tile(field[i][j] and use setResourceType(0)
-	 * to set it to 0, this will change it to a default terrain tile and 
-	 * update the map.
-	 */
+	
 
 	public int gatherResources(int resource) throws InterruptedException {
 		this.resource = resource;
@@ -258,7 +259,7 @@ public class Agent {//Removed abstract for testing purposes
 				System.out.println("Due to a lack of energy, " + this.name + " has sat down and dedicated his life to philosophy");
 				this.hungry = false;
 				this.isPhilosopher = true;
-				//Need to set the resource type of the tile to 8
+				field[locationX][locationY].setResourceType(8);
 			}
 
 		}
@@ -337,19 +338,31 @@ public class Agent {//Removed abstract for testing purposes
 		return building;
 		//
 	}
-	
+	/**
+	 * Returns Y destination of Agent 
+	 * @return
+	 */
 	public int getDy() {
 		return dy;
 	}
-
+	/**
+	 * Sets y destination of an Agent
+	 * @param dy
+	 */
 	public void setDy(int dy) {
 		this.dy = dy;
 	}
-
+	/**
+	 * Gets destination x coordinate of Agent
+	 * @return
+	 */
 	public int getDx() {
 		return dx;
 	}
-
+	/**
+	 * Sets Y destination of Agent
+	 * @param dx
+	 */
 	public void setDx(int dx) {
 		this.dx = dx;
 	}
