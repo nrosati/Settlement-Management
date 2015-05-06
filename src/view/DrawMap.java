@@ -301,6 +301,7 @@ public class DrawMap extends JPanel implements Observer{
 				lostFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				lostFrame.setVisible(true);
 				System.out.println("Sorry you lost");
+				break;
 			}
 			
 		}
