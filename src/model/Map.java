@@ -20,172 +20,192 @@ public class Map {
 	private static Map map = new Map();
 	private final String difficulty = ("easy");
 	private BufferedImage mapImage;
-	
-	/**
-	 * We use the singleton design pattern to create our map.
-	 * This class uses MapGenerator to actually generate the
-	 * map.
-	 * Author Nick Rosati  
-	 * @return
-	 */
-	public static Map getMap(){
-		return map;
-	}
-	private Map(){
-		mapGen = new MapGenerator(difficulty);
-		field = mapGen.getField();
-		biomeType = mapGen.getBiome();	
-		agents = new ArrayList<Agent>();
-		buildings = new ArrayList<Building>();
-		
-		foodCount = 4;
-		occupied = false;		
-		drawMap();
-		
-	}
-	
-	
 
 	/**
-	 * Counts the number of resources on the map.
-	 * Author Nick Rosati
+	 * We use the singleton design pattern to create our map. This class uses
+	 * MapGenerator to actually generate the map. Author Nick Rosati
+	 * 
+	 * @return
+	 */
+	public static Map getMap() {
+		return map;
+	}
+
+	private Map() {
+		mapGen = new MapGenerator(difficulty);
+		field = mapGen.getField();
+		biomeType = mapGen.getBiome();
+		agents = new ArrayList<Agent>();
+		buildings = new ArrayList<Building>();
+
+		foodCount = 4;
+		goldCount = 10;
+		occupied = false;
+		drawMap();
+		try {
+			this.payTax();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Counts the number of resources on the map. Author Nick Rosati
+	 * 
 	 * @return
 	 */
 	public int resourceCounter() {
 		int count = 0;
-		for(Building building: buildings){
+		for (Building building : buildings) {
 			String name = building.getName();
-			if(name.equals("Barracks"));
-				foodCount += building.getFoodCount();
-				count += 4;
+			if (name.equals("Barracks"))
+				;
+			foodCount += building.getFoodCount();
+			count += 4;
 		}
-		
+
 		return count;
 	}
+
 	/**
-	 * Returns the 2D Tile array representation of the Map
-	 * Author Nick Rosati
+	 * Returns the 2D Tile array representation of the Map Author Nick Rosati
+	 * 
 	 * @return
 	 */
-	public Tile[][] getField(){
+	public Tile[][] getField() {
 		return field;
 	}
+
 	/**
-	 * Returns the number of buildings on the map
-	 * Author Nick Rosati
+	 * Returns the number of buildings on the map Author Nick Rosati
+	 * 
 	 * @return
 	 */
-	public ArrayList getBuildings(){
+	public ArrayList getBuildings() {
 		return buildings;
 	}
+
 	/**
-	 * Increments the building count by 1
-	 * Author Nick Rosati
+	 * Increments the building count by 1 Author Nick Rosati
 	 */
-	public void addBuilding(Building building){
+	public void addBuilding(Building building) {
 		buildings.add(building);
-		if(building.getName().equals("Barracks"))foodCount +=4;
+		if (building.getName().equals("Barracks"))
+			foodCount += 4;
 	}
+
 	/**
-	 * Adds an Agent to the Map
-	 * Author Nick Rosati
+	 * Adds an Agent to the Map Author Nick Rosati
 	 */
-	public void addAgent(String name, int x, int y){
-		if(foodCount > 0){
-		Agent agent = new Agent(name, x, y);
-		agents.add(agent);
-		field[x][y].setResourceType(7);
-		foodCount--;
-		//agent slowly die - should have him start moving around and searching for food
-		}
-		else System.out.println("Not enough barracks space");
+	public void addAgent(String name, int x, int y) {
+		if (foodCount > 0) {
+			Agent agent = new Agent(name, x, y);
+			agents.add(agent);
+			field[x][y].setResourceType(7);
+			foodCount--;
+			// agent slowly die - should have him start moving around and
+			// searching for food
+		} else
+			System.out.println("Not enough barracks space");
 	}
+
 	/**
-	 * Removes an Agent from the map
-	 * Author Nick Rosati
+	 * Removes an Agent from the map Author Nick Rosati
 	 */
-	public void removeAgent(Agent agent){
+	public void removeAgent(Agent agent) {
 		agents.remove(agent);
 	}
+
 	/**
-	 * Returns the number of agents on the map
-	 * Author Nick Rosati
+	 * Returns the number of agents on the map Author Nick Rosati
+	 * 
 	 * @return
 	 */
-	public ArrayList<Agent> getAgents(){
+	public ArrayList<Agent> getAgents() {
 		return agents;
 	}
+
 	/**
-	 * Returns the number of resources on the map
-	 * Author Nick Rosati
+	 * Returns the number of resources on the map Author Nick Rosati
+	 * 
 	 * @return
 	 */
-	public int getResources(){
+	public int getResources() {
 		return foodCount;
 	}
+
 	/**
 	 * Draws the tile images to one large bufferedImage
 	 */
-	public void drawMap(){
-		
-		mapImage = new BufferedImage(3200,3200, Image.SCALE_SMOOTH);
+	public void drawMap() {
+
+		mapImage = new BufferedImage(3200, 3200, Image.SCALE_SMOOTH);
 		Graphics2D g = (Graphics2D) mapImage.getGraphics();
-		for(int i = 0; i < 100; i++){
-			for(int j = 0; j < 100; j++){
-				field[i][j].drawTile(g, i*32, j*32);
+		for (int i = 0; i < 100; i++) {
+			for (int j = 0; j < 100; j++) {
+				field[i][j].drawTile(g, i * 32, j * 32);
 			}
 		}
 	}
+
 	/**
-	 * Returns the mapImage containing all of the tiles painted to 
-	 * one large BufferedImage
+	 * Returns the mapImage containing all of the tiles painted to one large
+	 * BufferedImage
+	 * 
 	 * @return
 	 */
-	public BufferedImage getMapImage(){
+	public BufferedImage getMapImage() {
 		return mapImage;
 	}
+
 	public int getBiome() {
 		// TODO Auto-generated method stub
 		return biomeType;
 	}
-	
-	public static String nameGen(){
+
+	public static String nameGen() {
 		String name = "";
 		int random = MapGenerator.randomGen();
-		if(random == 0) name = "Leonidus";
-		else if(random == 1) name = "Corialanus";
-		else if(random == 2) name = "Maximus";
-		else if(random == 3) name = "Themistocles";
-		else name = "Achilles";
+		if (random == 0)
+			name = "Leonidus";
+		else if (random == 1)
+			name = "Corialanus";
+		else if (random == 2)
+			name = "Maximus";
+		else if (random == 3)
+			name = "Themistocles";
+		else
+			name = "Achilles";
 		return name;
-		
+
 	}
-	
-	
-	public void addWood(int wood){
+
+	public void addWood(int wood) {
 		this.woodCount += wood;
 	}
-	
+
 	public void addWater(int water) {
 		this.waterCount += water;
 	}
-	
+
 	public void addFood(int food) {
 		this.foodCount += food;
 	}
-	
+
 	public void addGold(int gold) {
 		this.goldCount += gold;
 	}
-	
+
 	public int getWorldWood() {
 		return this.woodCount;
 	}
-	
+
 	public int getWorldFood() {
 		return this.foodCount;
 	}
-	
+
 	public int getWorldWater() {
 		return this.waterCount;
 	}
@@ -193,8 +213,39 @@ public class Map {
 	public int getWorldGold() {
 		return this.goldCount;
 	}
-	
-	
-	
+
+	public void payTax() throws InterruptedException {
+
+		// setChanged();
+		// notifyObservers(this);
+
+		Thread tax = new Thread() {
+
+			public void run() {
+
+				for (int i = 1000; i > 0; i--) {
+					System.out.println("Success");
+					goldCount -= 1;
+					try {
+						Thread.sleep(8000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if (map.getWorldGold() <= 5) {
+						System.out.println("You need to pay your taxes");
+
+					}
+					if(map.getWorldGold() <= 0)
+						break;
+				}
+
+			}
+
+		};
+
+		tax.start();
+
+	}
 
 }

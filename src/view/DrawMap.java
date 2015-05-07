@@ -270,7 +270,7 @@ public class DrawMap extends JPanel implements Observer{
 		for(Agent agent: map.getAgents()){
 			//agent.addObserver(this);
 			String element = agent.getName() + " Health = " + agent.getHealth() 
-					+ " Wood = " + agent.getFoodCount() + " Water = " + agent.getWaterCount() 
+					+ " Thirst = " + agent.getThirst()+ " Wood = " + agent.getFoodCount() + " Water = " + agent.getWaterCount() 
 					+ " Gold = " + agent.getGoldCount();
 			list.addElement(element);
 			
@@ -289,7 +289,6 @@ public class DrawMap extends JPanel implements Observer{
 		
 		boolean lost = true;
 		for(Agent agent: map.getAgents()){
-			
 			if(!agent.isPhilosopher())lost = false;
 		}
 		if(lost == true){
@@ -303,7 +302,6 @@ public class DrawMap extends JPanel implements Observer{
 			lostFrame.setVisible(true);
 			System.out.println("Sorry you lost");
 		}
-			
 	
 		
 		if(map.getWorldGold() >= 100){
@@ -316,6 +314,17 @@ public class DrawMap extends JPanel implements Observer{
 			winFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			winFrame.setVisible(true);
 			System.out.println("Congratulations you won!");
+		}
+		if(map.getWorldGold() <= 0) {
+			JFrame lostFrame = new JFrame();
+			JLabel lostLabel = new JLabel();
+			lostLabel.setText("You failed to pay your taxes. You lose");
+			lostLabel.setVisible(true);
+			lostFrame.add(lostLabel);
+			lostFrame.pack();
+			lostFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			lostFrame.setVisible(true);
+			System.out.println("Sorry you lost");
 		}
 	}
 

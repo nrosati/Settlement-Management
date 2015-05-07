@@ -103,6 +103,7 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 		try {
 			this.slowlyDie();
 			this.slowlyDehydrate();
+			//map.payTaxes();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -262,9 +263,7 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 					storage = i;
 					woodCarry++;	
 				}
-				if(this.thirsty) {
-					this.drink();
-				}
+
 				this.gatheringWood = true;
 			}
 			
@@ -273,6 +272,9 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 				for(int i = 0; i <= 20; i++){
 					storage = i;
 					waterCarry++;	
+				}
+				if(this.thirsty) {
+					this.drink();
 				}
 				this.gatheringWater = true;
 			}
@@ -416,51 +418,7 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 
 	}
 	
-	public void payTax() throws InterruptedException {
-		
-		//setChanged();
-		//notifyObservers(this);
-		
-		Thread payTax = new Thread() {
 
-			public void run() {
-				
-				for(int i = gold; i > 0; i--) {
-					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					gold--;
-					//System.out.println(name + "'s health: " + health);
-					if(thirst <= 5) {
-						System.out.println("You are dehydrated! Drink water!");
-						paidTax = true;
-						//Walk Towards Either Building that stores food to eat or to nearest food resource
-							
-						}
-					}
-					
-					if(gold <= 0) {
-						
-						System.out.println("Due to dehydration, " + name + " has sat down and dedicated his life to philosophy");
-						paidTax = false;
-						isPhilosopher = true;
-						//Need to set the resource type of the tile to 8
-						int x = locationX;
-						int y = locationY;
-						field[x-1][y].setResourceType(8);	
-					}
-					//setChanged();
-					//notifyObservers(this);
-				}
-			
-		};
-			
-		payTax.start();
-
-	}
 	
 	public boolean isPhilosopher() {
 		return this.isPhilosopher;
@@ -669,5 +627,10 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 	}
 	public void setDepositing(boolean bool) {
 		this.depositing = bool;
+	}
+
+
+	public int getThirst() {
+		return this.thirst;
 	}
 }
