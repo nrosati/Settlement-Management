@@ -287,22 +287,24 @@ public class DrawMap extends JPanel implements Observer{
 		wrapper.setViewportView(new JViewport().add(panel));
 		System.out.println("Tile was changed");
 		
+		boolean lost = true;
 		for(Agent agent: map.getAgents()){
-			boolean lost = true;
-			if(agent.isPhilosopher())lost = false;
-			if(lost == false){
-				JFrame lostFrame = new JFrame();
-				JLabel lostLabel = new JLabel();
-				lostLabel.setText("All of your agents are dead, Sorry you lost!");
-				lostLabel.setVisible(true);
-				lostFrame.add(lostLabel);
-				lostFrame.pack();
-				lostFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				lostFrame.setVisible(true);
-				System.out.println("Sorry you lost");
-			}
 			
+			if(!agent.isPhilosopher())lost = false;
 		}
+		if(lost == true){
+			JFrame lostFrame = new JFrame();
+			JLabel lostLabel = new JLabel();
+			lostLabel.setText("All of your agents are dead, Sorry you lost!");
+			lostLabel.setVisible(true);
+			lostFrame.add(lostLabel);
+			lostFrame.pack();
+			lostFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			lostFrame.setVisible(true);
+			System.out.println("Sorry you lost");
+		}
+			
+	
 		
 		if(map.getWorldGold() >= 100){
 			JFrame winFrame = new JFrame();
