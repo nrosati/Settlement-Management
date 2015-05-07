@@ -11,11 +11,10 @@ public class ShortestPath {
 	private List<Vertex> nodes = new ArrayList<Vertex>();
 	private List<Edge> edges = new ArrayList<Edge>();
 
-	
 	private List<String> walk = new ArrayList<String>();
 	private int nodeCounter = 1;
 	private int[][] arrayAt = new int[100][100];
-	private static  Map map = Map.getMap(); 
+	private static Map map = Map.getMap();
 	private static Tile[][] field = map.getField();
 	private static Tile[][] walkPath;
 	private int lastX;
@@ -24,10 +23,10 @@ public class ShortestPath {
 	private int firstY;
 	private Agent agent;
 
-
 	LinkedList<Vertex> path;
 
-	public ShortestPath(Agent agent1, int sourceX, int sourceY, int destX, int destY) {
+	public ShortestPath(Agent agent1, int sourceX, int sourceY, int destX,
+			int destY) {
 		this.agent = agent1;
 		placeVertices();
 		placeEdges(sourceX, sourceY, destX, destY);
@@ -39,140 +38,129 @@ public class ShortestPath {
 		Dijkstra dijkstra = new Dijkstra(graph);
 
 		dijkstra.execute(nodes.get(finalSource));
-		if(dijkstra.getPath(nodes.get(finalDest-2)) != null)
-			path = dijkstra.getPath(nodes.get(finalDest-2));
-		else if(dijkstra.getPath(nodes.get(finalDest-1)) != null)
-			path = dijkstra.getPath(nodes.get(finalDest-1));
+
+		if (dijkstra.getPath(nodes.get(finalDest - 2)) != null)
+			path = dijkstra.getPath(nodes.get(finalDest - 2));
+		else if (dijkstra.getPath(nodes.get(finalDest - 1)) != null)
+			path = dijkstra.getPath(nodes.get(finalDest - 1));
 		else
 			path = dijkstra.getPath(nodes.get(finalDest));
-		
+
 		lastX = sourceX;
 		lastY = sourceY;
 		firstX = sourceX;
 		firstY = sourceY;
-		
+
 		Thread one = new Thread() {
-		    public void run() {
-			int i;
-			int j;
-			int lastResource = 3;
-			String[] str = new String[1000];
-		    for (Vertex vertex : path) {
-		    	
-		    	try {
-					Thread.sleep(250);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			public void run() {
+				int i;
+				int j;
+				int lastResource = 3;
+				String[] str = new String[1000];
+				for (Vertex vertex : path) {
 
-		       // System.out.println(vertex);
-		        String tempString = vertex.toString();
-		        str = tempString.split("[^\\d]+");
-		        if(field[lastX][lastY] != null){
-		        	lastResource = field[lastX][lastY].getResourceType();
-		        }
-		        
-		        i = Integer.parseInt(str[1]);
-		        j = Integer.parseInt(str[2]);
-		        
-		        if(field[i][j].getResourceType()==3) {
-		        	
-		        }
-		        
-		        field[i][j].setAgent();
-		        
-		        
-		        
-		       /* if(field[i-1][j].getResourceType() == 7)
-		        	field[i-1][j].setResourceType(0);
-		        
-		        if(field[i][j-1].getResourceType() == 7 ) 
-		        	field[i][j-1].setResourceType(0);
-		        
-		        if(field[i+1][j].getResourceType() == 7)
-		        	field[i+1][j].setResourceType(0);
-		        
-		        if(field[i][j+1].getResourceType() == 7)
-		        	field[i][j+1].setResourceType(0);*/
-		        
-		        if(field[lastX][lastY] != null && 
-		        		 field[lastX][lastY].getResourceType() != 5 )
-		        	field[lastX][lastY].setResourceType(0);
-		        if(field[lastX][lastY].getResourceType() == 5)
-		        	field[lastX][lastY].setResourceType(5);
-		        lastX = i;
-		        lastY = j;
-
-		        
-		        }
-	        agent.setAgentWalkingFalse();
-	        if(agent.isGatheringFood()) {
-	    		Building deposit = new Building("Storage");
-				try {
-					if(!agent.isDepositing()) {
-						deposit.depositResources(agent, 3, agent.getFoodCount());
-						agent.setDepositing(true);
+					try {
+						Thread.sleep(250);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				agent.setGatheringFood(false);
 
-	        }
-	        if(agent.isGatheringWood()) {
-	    		Building deposit = new Building("Storage");
-				try {
-					if(!agent.isDepositing()) {
-						deposit.depositResources(agent, 1, agent.getWoodCount());
-						agent.setDepositing(true);
+					// System.out.println(vertex);
+					String tempString = vertex.toString();
+					str = tempString.split("[^\\d]+");
+					if (field[lastX][lastY] != null) {
+						lastResource = field[lastX][lastY].getResourceType();
 					}
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				agent.setGatheringWood(false);
 
-	        }
-	        if(agent.isGatheringWater()) {
-	    		Building deposit = new Building("Storage");
-				try {
-					if(!agent.isDepositing()) {
-						deposit.depositResources(agent, 2, agent.getWaterCount());
-						agent.setDepositing(true);
+					i = Integer.parseInt(str[1]);
+					j = Integer.parseInt(str[2]);
+
+					if (field[i][j].getResourceType() == 3) {
+
 					}
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				agent.setGatheringWater(false);
 
-	        }
-	        if(agent.isGatheringGold()) {
-	    		Building deposit = new Building("Storage");
-				try {
-					if(!agent.isDepositing()) {
-						deposit.depositResources(agent, 4, agent.getGoldCount());
-						agent.setDepositing(true);
+					field[i][j].setAgent();
+
+					if (field[lastX][lastY] != null
+							&& field[lastX][lastY].getResourceType() != 5)
+						field[lastX][lastY].setResourceType(0);
+					if (field[lastX][lastY].getResourceType() == 5)
+						field[lastX][lastY].setResourceType(5);
+					lastX = i;
+					lastY = j;
+
+				}
+				if (!agent.isDepositing() && !agent.isHungry()) {
+
+					agent.setAgentWalkingFalse();
+					if (agent.isGatheringFood()) {
+						Building deposit = new Building("Storage");
+						try {
+							if (!agent.isDepositing()) {
+								deposit.depositResources(agent, 3,
+										agent.getFoodCount());
+								agent.setDepositing(true);
+							}
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						agent.setGatheringFood(false);
+
 					}
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				agent.setGatheringGold(false);
+					if (agent.isGatheringWood()) {
+						Building deposit = new Building("Storage");
+						try {
+							if (!agent.isDepositing()) {
+								deposit.depositResources(agent, 1,
+										agent.getWoodCount());
+								agent.setDepositing(true);
+							}
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						agent.setGatheringWood(false);
 
-	        }
-		    }
+					}
+					if (agent.isGatheringWater()) {
+						Building deposit = new Building("Storage");
+						try {
+							if (!agent.isDepositing()) {
+								deposit.depositResources(agent, 2,
+										agent.getWaterCount());
+								agent.setDepositing(true);
+							}
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						agent.setGatheringWater(false);
+
+					}
+					if (agent.isGatheringGold()) {
+						Building deposit = new Building("Storage");
+						try {
+							if (!agent.isDepositing()) {
+								deposit.depositResources(agent, 4,
+										agent.getGoldCount());
+								agent.setDepositing(true);
+							}
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						agent.setGatheringGold(false);
+					}
+
+				}
+			}
 		};
-		
-		
-		
-		
+
 		one.start();
 
-
-	    }
+	}
 
 	public void placeVertices() {
 		for (int i = 0; i < 100; i++) {
@@ -188,20 +176,21 @@ public class ShortestPath {
 
 	public void placeEdges(int sourceX, int sourceY, int destX, int destY) {
 		int weight = 1;
-		if(destX < sourceX) {
+		if (destX < sourceX) {
 			int temp = sourceX;
 			sourceX = destX;
 			destX = temp;
 		}
-		if(destY < sourceY) {
+		if (destY < sourceY) {
 			int temp = sourceY;
 			sourceY = destY;
 			destY = temp;
 		}
-		
+
 		for (int i = sourceX; i <= destX; i++) {
 			for (int j = sourceY; j <= destY; j++) {
-				if (i > 0 && (i - 1) <= 100 && field[i][j].getResourceType() != 2) {
+				if (i > 0 && (i - 1) <= 100
+						&& field[i][j].getResourceType() != 2) {
 					addLane("edge_" + i + j, arrayAt[i][j], arrayAt[i - 1][j],
 							weight);
 				}
@@ -222,11 +211,11 @@ public class ShortestPath {
 			}
 		}
 	}
-	
+
 	public Tile[][] getPath() {
 		return ShortestPath.walkPath;
 	}
-	
+
 	public int getPathInt() {
 		return walkPath.length;
 	}
@@ -241,11 +230,9 @@ public class ShortestPath {
 	private int getNode(int i, int j) {
 		return arrayAt[i][j];
 	}
-	
 
 	public static void main(String[] args) {
-		//ShortestPath path = new ShortestPath(5,5,20,20);
+		// ShortestPath path = new ShortestPath(5,5,20,20);
 	}
 
 }
-

@@ -29,8 +29,6 @@ public class DrawMap extends JPanel implements Observer{
 		init();
 		RegisterListeners();
 		
-		
-		
 	}
 	/**
 	 * First adds the current class as an observer for all the tiles.
@@ -238,10 +236,10 @@ public class DrawMap extends JPanel implements Observer{
 		JFrame frame = new JFrame("GameMap");
 		frame.setLayout(new BorderLayout());
 		DrawMap draw = new DrawMap();
-		map.addAgent("Socrates", 2, 1);
+		map.addAgent("Socrates", 10, 6);
 		
-		map.addAgent("Plato", 2, 3);
-		map.addAgent("Hercules", 2, 5);
+		map.addAgent("Plato", 10, 8);
+		map.addAgent("Hercules", 10, 10);
 		frame.add(draw.wrapper, BorderLayout.WEST);
 		frame.add(draw.buttons, BorderLayout.SOUTH);
 		
@@ -280,6 +278,7 @@ public class DrawMap extends JPanel implements Observer{
 			//agent.addObserver(this);
 		}
 		listTwo.clear();
+		listTwo.addElement("Deposited Food = " + map.getWorldFood());
 		listTwo.addElement("Deposited Wood = " + map.getWorldWood());
 		listTwo.addElement("Deposited Food = " + map.getWorldFood());
 		listTwo.addElement("Deposited Gold = " + map.getWorldGold());

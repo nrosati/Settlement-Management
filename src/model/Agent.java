@@ -76,6 +76,7 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 		this.name = name;
 		map = Map.getMap();
 		health = 20;
+		thirst = 20;
 		strength = 0;
 		faith = 0;
 		storage = 20;//Food Count essentially;
@@ -101,6 +102,7 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 		this.walking  = false;
 		try {
 			this.slowlyDie();
+			this.slowlyDehydrate();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -244,18 +246,44 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 			locationX = dx;
 			locationY = dy;
 			if(resource == 3) {
-				gatherFood();
+				this.busy = true;
+				for(int i = 0; i <= 20; i++){
+					storage = i;
+					foodCarry++;	
+				}
+				if(this.hungry) {
+					this.eat();
+				}
+				this.gatheringFood = true;
 			}
 			if(resource == 1) {
-				gatherWood();
+				this.busy = true;
+				for(int i = 0; i <= 20; i++){
+					storage = i;
+					woodCarry++;	
+				}
+				if(this.thirsty) {
+					this.drink();
+				}
+				this.gatheringWood = true;
 			}
 			
 			if(resource == 2) {
-				gatherWater();
+				this.busy = true;
+				for(int i = 0; i <= 20; i++){
+					storage = i;
+					waterCarry++;	
+				}
+				this.gatheringWater = true;
 			}
 			
 			if(resource == 4) {
-				gatherGold();
+				this.busy = true;
+				for(int i = 0; i <= 20; i++){
+					storage = i;
+					goldCarry++;	
+				}
+				this.gatheringGold = true;
 			}
 			
 			//setAgent(locationX, locationY);
@@ -264,44 +292,20 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 
 	}
 	
-	public int gatherFood() throws InterruptedException {
-		this.busy = true;
-		for(int i = 0; i <= 20; i++){
-			storage = i;
-			foodCarry++;	
-		}
-		this.gatheringFood = true;
-		return foodCarry;
+	public void setFoodCarry(int d) {
+		this.foodCarry -= d;
 	}
 	
 	
-	public int gatherWood() throws InterruptedException {
-		this.busy = true;
-		for(int i = 0; i <= 20; i++){
-			storage = i;
-			woodCarry++;	
-		}
-		this.gatheringWood = true;
-		return woodCarry;
+	public void setWoodCarry(int d){
+		this.woodCarry -= d;
 	}
-	public int gatherWater() throws InterruptedException {
-		this.busy = true;
-		for(int i = 0; i <= 20; i++){
-			storage = i;
-			waterCarry++;	
-		}
-		this.gatheringWater = true;
-		return waterCarry;
+	public void setWaterCarry(int d) {
+		this.waterCarry -= d;
 	}
 	
-	public int gatherGold() throws InterruptedException {
-		this.busy = true;
-		for(int i = 0; i <= 20; i++){
-			storage = i;
-			goldCarry++;	
-		}
-		this.gatheringGold = true;
-		return goldCarry;
+	public void setGoldCarry(int d) {
+		this.goldCarry -= d;
 	}
 	
 	/**
@@ -332,7 +336,13 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 					if(health <= 5) {
 						System.out.println("Your health is getting low. Eat something!");
 						hungry = true;
+						try {
+							gatherResources(3);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
+					}
 					
 					
 					if(health <= 0) {
@@ -367,7 +377,7 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 				
 				for(int i = thirst; i > 0; i--) {
 					try {
-						Thread.sleep(5000);
+						Thread.sleep(3000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -378,7 +388,12 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 						System.out.println("You are dehydrated! Drink water!");
 						thirsty = true;
 						//Walk Towards Either Building that stores food to eat or to nearest food resource
-							
+						try {
+							gatherResources(2);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						}
 					}
 					
@@ -588,6 +603,7 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 	public void drink() {
 		if(this.waterCarry != 0) {
 			thirst += waterCarry;
+			waterCarry = 0;
 		}
 		else
 			return;

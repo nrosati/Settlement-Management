@@ -12,7 +12,6 @@ public class Building {
 	private int foodCount;
 	private int woodCount;
 	private int waterCount;
-	private int resourceType;
 	private int resourcesCount;
 	private Agent agent;
 	private String buildingType;
@@ -84,9 +83,12 @@ public class Building {
 	 * Then the second int is the number of resources being deposited.
 	 * It should then increase the corresponding resource count.
 	 */
-	public void depositResources(Agent agent1, int resourceT, int numResources) throws InterruptedException{
+	public void depositResources(Agent agent1, int resourceType, int numResources) throws InterruptedException{
 		int closestDistance = 0;
 		int min = Integer.MAX_VALUE;
+		if(agent1.isDepositing()) {
+			
+		
 		DistanceFormula calculateDistance = new DistanceFormula();
 		for (int i = 0; i < 100; i++) {
 			for (int j = 0; j < 100; j++) {
@@ -104,44 +106,33 @@ public class Building {
 
 		}
 		ShortestPath path = new ShortestPath(agent1, agent1.getXLoc(),agent1.getYLoc(),dx,dy);
-		
-		
+		agent1.setAgentWalkingTrue();
 			if(resourceType == 1) {
-				woodCount += resourcesCount;
-				map.addWood(resourcesCount);
+				woodCount += numResources;
+				map.addWood(numResources);
 				agent.setDepositing(false);
+				agent.setWoodCarry(numResources);
 			}
 			else if (resourceType == 2) {
-				waterCount += resourcesCount;
-				map.addWater(resourcesCount);
-				try {
-					Thread.sleep(1000);
-					//agent.gatherResources(2);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				waterCount += numResources;
+				map.addWater(numResources);
 				agent.setDepositing(false);
+				agent.setWaterCarry(numResources);
 			}
 			
-			else if(resourceT == 3){
+			else if(resourceType == 3){
 				foodCount += numResources;
 				map.addFood(numResources);
 				agent.setDepositing(false);
+				agent.setFoodCarry(numResources);
 			}
-			else if(resourceType ==4) {
-				goldCount += resourcesCount;
-				map.addGold(resourcesCount);
-				try {
-					Thread.sleep(1000);
-					//agent.gatherResources(4);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			else if(resourceType == 4) {
+				goldCount += numResources;
+				map.addGold(numResources);
 				agent.setDepositing(false);
+				agent.setGoldCarry(numResources);
 			}
-		
+		}
 
 	}
 	

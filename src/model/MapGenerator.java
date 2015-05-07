@@ -90,12 +90,12 @@ public class MapGenerator {
 			}
 		}
 		for(int i = 0; i < 100; i++){
-			field[i][0].setResourceType(2);
-			field[i][99].setResourceType(2);
+			field[i][0].setResourceType(0);
+			field[i][99].setResourceType(0);
 		}
 		for(int j = 0; j < 100; j++){
-			field[0][j].setResourceType(2);
-			field[99][j].setResourceType(2);
+			field[0][j].setResourceType(0);
+			field[99][j].setResourceType(0);
 		}
 		return field;
 	}
