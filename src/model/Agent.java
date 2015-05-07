@@ -509,8 +509,8 @@ public class Agent {//extends Observable{//Removed abstract for testing purposes
 		boolean built = false;
 		int build =5;
 		Building building = new Building(name);
-		if(building.getCost() > storage) built = false;
-		else if(building.getCost() <= storage){
+		if(building.getCost() > woodCount) built = false;
+		else if(building.getCost() <= woodCount){
 			//map.addBuilding(building, x, y);
 			if(name.equals("StoreHouse"))build = 5;
 			if(name.equals("Barracks"))build = 6;

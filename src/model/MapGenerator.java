@@ -97,6 +97,8 @@ public class MapGenerator {
 			field[0][j].setResourceType(0);
 			field[99][j].setResourceType(0);
 		}
+		
+		
 		return field;
 	}
 	/**

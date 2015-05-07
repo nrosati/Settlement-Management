@@ -304,7 +304,7 @@ public class DrawMap extends JPanel implements Observer{
 		}
 	
 		
-		if(map.getWorldGold() >= 100){
+		if(map.getWorldGold() >= 45){
 			JFrame winFrame = new JFrame();
 			JLabel winLabel = new JLabel();
 			winLabel.setText("Congratulations you won!");
