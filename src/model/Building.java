@@ -86,9 +86,6 @@ public class Building {
 	public void depositResources(Agent agent1, int resourceType, int numResources) throws InterruptedException{
 		int closestDistance = 0;
 		int min = Integer.MAX_VALUE;
-		if(agent1.isDepositing()) {
-			
-		
 		DistanceFormula calculateDistance = new DistanceFormula();
 		for (int i = 0; i < 100; i++) {
 			for (int j = 0; j < 100; j++) {
@@ -131,7 +128,6 @@ public class Building {
 				map.addGold(numResources);
 				agent.setDepositing(false);
 				agent.setGoldCarry(numResources);
-			}
 		}
 
 	}

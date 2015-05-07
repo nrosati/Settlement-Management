@@ -280,7 +280,7 @@ public class DrawMap extends JPanel implements Observer{
 		listTwo.clear();
 		listTwo.addElement("Deposited Food = " + map.getWorldFood());
 		listTwo.addElement("Deposited Wood = " + map.getWorldWood());
-		listTwo.addElement("Deposited Food = " + map.getWorldFood());
+		listTwo.addElement("Deposited Water = " + map.getWorldWater());
 		listTwo.addElement("Deposited Gold = " + map.getWorldGold());
 		
 		repaint();
